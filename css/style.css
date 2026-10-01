@@ -1,0 +1,523 @@
+/* =========================================
+   TOKENS / VARIÁVEIS
+   ========================================= */
+:root {
+  --clr-bg:          #0d0f14;
+  --clr-surface:     #151820;
+  --clr-surface-2:   #1c2030;
+  --clr-border:      rgba(255,255,255,0.07);
+
+  --clr-grad-start:  #6c47ff;
+  --clr-grad-end:    #00c2ff;
+  --clr-accent:      #6c47ff;
+  --clr-accent-soft: rgba(108,71,255,0.15);
+
+  --clr-text:        #e8eaf0;
+  --clr-text-muted:  #8892a4;
+
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  22px;
+
+  --shadow-card: 0 4px 32px rgba(0,0,0,0.45);
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --transition: 0.25s ease;
+}
+
+/* =========================================
+   RESET
+   ========================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  font-family: var(--font-sans);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+ul { list-style: none; }
+
+img { display: block; max-width: 100%; }
+
+/* =========================================
+   UTILITÁRIOS
+   ========================================= */
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding-block: 6rem;
+}
+
+.section__header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section__title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: .6rem;
+}
+
+.section__subtitle {
+  color: var(--clr-text-muted);
+  font-size: 1.05rem;
+  max-width: 540px;
+  margin-inline: auto;
+}
+
+/* =========================================
+   BOTÕES
+   ========================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem 1.75rem;
+  border-radius: var(--radius-sm);
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  color: #fff;
+}
+
+.btn--primary:hover {
+  opacity: .88;
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  border-color: var(--clr-border);
+  color: var(--clr-text-muted);
+}
+
+.btn--outline:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-text);
+  background: var(--clr-accent-soft);
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,15,20,0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.navbar__brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar__links a {
+  color: var(--clr-text-muted);
+  font-size: .9rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.navbar__links a:hover { color: var(--clr-text); }
+
+.navbar__toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--clr-text);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* =========================================
+   HERO
+   ========================================= */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 60% 40%, rgba(108,71,255,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 20% 70%, rgba(0,194,255,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  padding-block: 8rem 6rem;
+}
+
+.hero__badge {
+  display: inline-block;
+  background: var(--clr-accent-soft);
+  border: 1px solid rgba(108,71,255,0.35);
+  color: #a78bfa;
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .3rem .9rem;
+  border-radius: 999px;
+  margin-bottom: 1.4rem;
+}
+
+.hero__title {
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.4rem;
+  background: linear-gradient(135deg, #ffffff 30%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__subtitle {
+  font-size: 1.15rem;
+  color: var(--clr-text-muted);
+  margin-bottom: 2.4rem;
+  max-width: 540px;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--clr-text-muted);
+  font-size: 1.3rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+/* =========================================
+   CARDS DE ESTATÍSTICA
+   ========================================= */
+.about__cards {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card--stat {
+  flex: 1 1 180px;
+  max-width: 220px;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.card--stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(108,71,255,0.4);
+}
+
+.card__icon { font-size: 2rem; display: block; margin-bottom: .6rem; }
+.card__value { font-size: 2.4rem; font-weight: 800; display: block;
+  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.card__label { color: var(--clr-text-muted); font-size: .85rem; margin-top: .25rem; }
+
+/* =========================================
+   GRIDS
+   ========================================= */
+.grid { display: grid; gap: 1.5rem; }
+
+.grid--students    { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.grid--teachers    { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+.grid--disciplines { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+/* =========================================
+   CARD DE ALUNO
+   ========================================= */
+.student-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.student-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(108,71,255,0.4);
+}
+
+.student-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-inline: auto;
+  margin-bottom: .9rem;
+  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.student-card__name {
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: .2rem;
+}
+
+.student-card__role {
+  font-size: .8rem;
+  color: var(--clr-text-muted);
+}
+
+/* =========================================
+   CARD DE PROFESSOR
+   ========================================= */
+.teacher-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition);
+}
+
+.teacher-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,194,255,0.35);
+}
+
+.teacher-card__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #00c2ff, #6c47ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.teacher-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: .2rem;
+}
+
+.teacher-card__subject {
+  font-size: .82rem;
+  color: var(--clr-text-muted);
+}
+
+/* =========================================
+   CARD DE DISCIPLINA
+   ========================================= */
+.discipline-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), border-color var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.discipline-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--clr-grad-start), var(--clr-grad-end));
+}
+
+.discipline-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(108,71,255,0.4);
+}
+
+.discipline-card__icon {
+  font-size: 1.6rem;
+  margin-bottom: .75rem;
+}
+
+.discipline-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: .4rem;
+}
+
+.discipline-card__info {
+  font-size: .82rem;
+  color: var(--clr-text-muted);
+}
+
+/* =========================================
+   SEÇÕES ALTERNADAS
+   ========================================= */
+.teachers  { background: var(--clr-surface); }
+.disciplines { background: var(--clr-bg); }
+
+/* =========================================
+   FOOTER
+   ========================================= */
+.footer {
+  background: var(--clr-surface);
+  border-top: 1px solid var(--clr-border);
+  padding-top: 4rem;
+}
+
+.footer__inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+}
+
+.footer__brand p {
+  color: var(--clr-text-muted);
+  font-size: .9rem;
+  margin-top: .6rem;
+  max-width: 280px;
+}
+
+.footer__links h4,
+.footer__contact h4 {
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--clr-text-muted);
+  margin-bottom: 1rem;
+}
+
+.footer__links ul { display: flex; flex-direction: column; gap: .6rem; }
+
+.footer__links a {
+  color: var(--clr-text-muted);
+  font-size: .9rem;
+  transition: color var(--transition);
+}
+
+.footer__links a:hover { color: var(--clr-text); }
+
+.footer__contact p {
+  color: var(--clr-text-muted);
+  font-size: .9rem;
+}
+
+.footer__contact a:hover { color: var(--clr-text); }
+
+.footer__bottom {
+  border-top: 1px solid var(--clr-border);
+  text-align: center;
+  padding-block: 1.25rem;
+  color: var(--clr-text-muted);
+  font-size: .82rem;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+   ========================================= */
+@media (max-width: 768px) {
+  .navbar__links { display: none; }
+  .navbar__links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 64px;
+    left: 0; right: 0;
+    background: var(--clr-surface);
+    border-bottom: 1px solid var(--clr-border);
+    padding: 1.5rem;
+    gap: 1.25rem;
+  }
+  .navbar__toggle { display: block; }
+
+  .hero__content { padding-block: 7rem 4rem; }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid--students    { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .grid--teachers    { grid-template-columns: 1fr; }
+  .grid--disciplines { grid-template-columns: 1fr; }
+}
