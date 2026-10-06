@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Página de apresentação da turma" />
-  <title>Turma — [NOME DA TURMA]</title>
+  <meta name="description" content="Página da turma Engenharia de Software 2026.2 — 5º semestre, turno da tarde." />
+  <title>Engenharia de Software 2026.2</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -12,12 +12,12 @@
   <!-- NAVEGAÇÃO -->
   <header class="navbar">
     <div class="container navbar__inner">
-      <span class="navbar__brand">[NOME DA TURMA]</span>
+      <span class="navbar__brand">ES 2026.2</span>
       <nav>
         <ul class="navbar__links">
           <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#alunos">Alunos</a></li>
           <li><a href="#professores">Professores</a></li>
+          <li><a href="#alunos">Alunos</a></li>
           <li><a href="#disciplinas">Disciplinas</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
@@ -30,11 +30,11 @@
   <section class="hero" id="sobre">
     <div class="hero__bg"></div>
     <div class="container hero__content">
-      <span class="hero__badge">Bem-vindo à turma • 5º Semestre • 2026</span>
-      <h1 class="hero__title">Turma de<br>Sistemas de Informação</h1>
+      <span class="hero__badge">5º semestre • turno da tarde • 2024</span>
+      <h1 class="hero__title">Engenharia de<br>Software 2026.2</h1>
       <p class="hero__subtitle">
-        Somos a turma do 5º semestre do curso de Sistemas de Informação.
-        Conheça quem somos, nossos professores e as disciplinas da nossa grade.
+        Turma do 5º semestre de Engenharia de Software, no turno da tarde.
+        Conheça quem estuda aqui, os professores e as disciplinas deste período.
       </p>
       <div class="hero__actions">
         <a href="#alunos" class="btn btn--primary">Conhecer a turma</a>
@@ -50,8 +50,9 @@
       <div class="section__header">
         <h2 class="section__title">Sobre a turma</h2>
         <p class="section__subtitle">
-          Curso de Sistemas de Informação — 5º Semestre — Turno Noturno.
-          Uma turma unida, curiosa e comprometida com o aprendizado e a tecnologia.
+          Ingressamos em 2024 e hoje formamos a turma Engenharia de Software 2026.2.
+          No 5º semestre, à tarde, a sala percorre arquitetura, gestão de projetos,
+          processos de desenvolvimento, redes e robótica móvel.
         </p>
       </div>
       <div class="about__cards">
@@ -74,19 +75,6 @@
     </div>
   </section>
 
-  <!-- ALUNOS -->
-  <section class="section students" id="alunos">
-    <div class="container">
-      <div class="section__header">
-        <h2 class="section__title">Nossos Alunos</h2>
-        <p class="section__subtitle">Conheça quem faz parte desta turma.</p>
-      </div>
-      <div class="grid grid--students" id="students-grid">
-        <!-- Cards gerados via JS -->
-      </div>
-    </div>
-  </section>
-
   <!-- PROFESSORES -->
   <section class="section teachers" id="professores">
     <div class="container">
@@ -94,9 +82,25 @@
         <h2 class="section__title">Professores</h2>
         <p class="section__subtitle">Os responsáveis por guiar nossa formação.</p>
       </div>
-      <div class="grid grid--teachers" id="teachers-grid">
-        <!-- Cards gerados via JS -->
+      <div class="teacher-slider">
+        <button type="button" class="teacher-slider__arrow teacher-slider__arrow--prev" aria-label="Professor anterior">‹</button>
+        <div class="teacher-slider__viewport" id="teacher-viewport" aria-live="polite"></div>
+        <button type="button" class="teacher-slider__arrow teacher-slider__arrow--next" aria-label="Próximo professor">›</button>
       </div>
+    </div>
+  </section>
+
+  <!-- ALUNOS -->
+  <section class="section students" id="alunos">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Nossos Alunos</h2>
+        <p class="section__subtitle">A turma em ordem alfabética.</p>
+      </div>
+    </div>
+    <div class="students-marquee">
+      <div class="students-marquee__row students-marquee__row--left" id="students-row-top"></div>
+      <div class="students-marquee__row students-marquee__row--right" id="students-row-bottom"></div>
     </div>
   </section>
 
@@ -117,25 +121,25 @@
   <footer class="footer" id="contato">
     <div class="container footer__inner">
       <div class="footer__brand">
-        <span class="navbar__brand">[NOME DA TURMA]</span>
-        <p>Página desenvolvida pelos alunos como projeto acadêmico.</p>
+        <span class="navbar__brand">Engenharia de Software 2026.2</span>
+        <p>Página da turma de Engenharia de Software 2026.2, 5º semestre, turno da tarde.</p>
       </div>
       <div class="footer__links">
         <h4>Navegação</h4>
         <ul>
           <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#alunos">Alunos</a></li>
           <li><a href="#professores">Professores</a></li>
+          <li><a href="#alunos">Alunos</a></li>
           <li><a href="#disciplinas">Disciplinas</a></li>
         </ul>
       </div>
       <div class="footer__contact">
         <h4>Contato</h4>
-        <p>📧 <a href="mailto:[EMAIL DA TURMA]">[EMAIL DA TURMA]</a></p>
+        <p>📧 <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p>
       </div>
     </div>
     <div class="footer__bottom">
-      <p>© <span id="year"></span> [NOME DA TURMA]. Todos os direitos reservados.</p>
+      <p>© <span id="year"></span> Engenharia de Software 2026.2. Todos os direitos reservados.</p>
     </div>
   </footer>
 

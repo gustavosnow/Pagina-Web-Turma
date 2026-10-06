@@ -100,7 +100,8 @@ img { display: block; max-width: 100%; }
 }
 
 .btn--primary {
-  background: linear-gradient(135deg, var(--clr-grad-start), var(--clr-grad-end));
+  border-color: #6c47ff;
+  background: #6c47ff;
   color: #fff;
 }
 
@@ -289,13 +290,69 @@ img { display: block; max-width: 100%; }
    ========================================= */
 .grid { display: grid; gap: 1.5rem; }
 
-.grid--students    { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-.grid--teachers    { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-.grid--disciplines { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+.grid--disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.grid--disciplines .discipline-card {
+  flex: 0 0 100%;
+}
+
+@media (min-width: 768px) {
+  .grid--disciplines .discipline-card {
+    flex-basis: calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid--disciplines .discipline-card {
+    flex-basis: calc((100% - 3rem) / 3);
+  }
+}
 
 /* =========================================
    CARD DE ALUNO
    ========================================= */
+.students-marquee {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.students-marquee__row {
+  overflow: hidden;
+  padding-block: .35rem;
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.students-marquee__track {
+  display: flex;
+  width: max-content;
+  animation: students-scroll 36s linear infinite;
+}
+
+.students-marquee__row--right .students-marquee__track {
+  animation-direction: reverse;
+}
+
+.students-marquee__row:hover .students-marquee__track {
+  animation-play-state: paused;
+}
+
+.students-marquee__group {
+  display: flex;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@keyframes students-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 .student-card {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -303,11 +360,12 @@ img { display: block; max-width: 100%; }
   padding: 1.5rem 1.25rem;
   text-align: center;
   box-shadow: var(--shadow-card);
-  transition: transform var(--transition), border-color var(--transition);
+  width: 210px;
+  flex: 0 0 210px;
+  transition: border-color var(--transition);
 }
 
 .student-card:hover {
-  transform: translateY(-4px);
   border-color: rgba(108,71,255,0.4);
 }
 
@@ -341,46 +399,86 @@ img { display: block; max-width: 100%; }
 /* =========================================
    CARD DE PROFESSOR
    ========================================= */
-.teacher-card {
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
-  padding: 1.75rem 1.5rem;
-  display: flex;
+.teacher-slider {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.2rem;
+  gap: 1.25rem;
+}
+
+.teacher-slider__viewport {
+  position: relative;
+  min-height: 260px;
+}
+
+.teacher-slide {
+  display: none;
+  grid-template-columns: 180px minmax(0, 1fr);
+  align-items: center;
+  gap: 1.75rem;
+  background: var(--clr-surface-2);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
   box-shadow: var(--shadow-card);
-  transition: transform var(--transition), border-color var(--transition);
 }
 
-.teacher-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0,194,255,0.35);
-}
+.teacher-slide.is-center { display: grid; }
 
-.teacher-card__avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.teacher-slide__photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
   background: linear-gradient(135deg, #00c2ff, #6c47ff);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 3rem;
   font-weight: 700;
   color: #fff;
 }
 
-.teacher-card__name {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: .2rem;
+.teacher-slide__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.teacher-card__subject {
-  font-size: .82rem;
+.teacher-slide__name {
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.25;
+  margin-bottom: .45rem;
+}
+
+.teacher-slide__subject {
+  color: #a78bfa;
+  font-weight: 600;
+  font-size: .95rem;
+  margin-bottom: .9rem;
+}
+
+.teacher-slide__summary {
   color: var(--clr-text-muted);
+  font-size: 1.02rem;
+}
+
+.teacher-slider__arrow {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--clr-border);
+  background: var(--clr-surface-2);
+  color: var(--clr-text);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.teacher-slider__arrow:hover {
+  border-color: rgba(0,194,255,0.45);
+  background: var(--clr-accent-soft);
 }
 
 /* =========================================
@@ -510,14 +608,27 @@ img { display: block; max-width: 100%; }
 
   .hero__content { padding-block: 7rem 4rem; }
 
+  .teacher-slide.is-center {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .teacher-slide.is-center .teacher-slide__photo { width: 160px; }
+
   .footer__inner {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .students-marquee__track { animation: none; }
+  .students-marquee__group[aria-hidden="true"] { display: none; }
+  .teacher-slide { transition: none; }
+}
+
 @media (max-width: 480px) {
-  .grid--students    { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-  .grid--teachers    { grid-template-columns: 1fr; }
-  .grid--disciplines { grid-template-columns: 1fr; }
+  .teacher-slider { gap: .5rem; }
+  .teacher-slider__arrow { width: 40px; height: 40px; }
 }
