@@ -1,4 +1,4 @@
-# Engenharia de Software 2026.2
+# Engenharia de Software 2026.2 [![Acessar o site](https://img.shields.io/badge/Acessar%20o%20site-6C47FF?style=for-the-badge)](https://es-2026-2.vercel.app)
 
 Landing page da turma de Engenharia de Software, 5º semestre, turno da tarde, ingresso em 2024. O período letivo é o 2026.2.
 
@@ -81,7 +81,3 @@ Nomes, resumos e disciplinas ficam no objeto `TURMA`, no início de `js/main.js`
 - HTML5
 - CSS3
 - JavaScript (vanilla)
-
-## Como visualizar
-
-Abra o arquivo `index.html` no navegador, ou use a extensão **Live Server** no editor.
