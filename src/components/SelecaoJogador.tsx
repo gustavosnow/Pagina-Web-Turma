@@ -37,22 +37,7 @@ export function SelecaoJogador() {
   const [confirmando, setConfirmando] = useState<number | null>(null);
   const botoes = useRef<(HTMLButtonElement | null)[]>([]);
   const preview = useRef<HTMLDivElement>(null);
-  const raiz = useRef<HTMLElement>(null);
   const aluno = alunos[sel];
-
-  useEffect(() => {
-    if (reduzirMovimento() || !raiz.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".celula", {
-        scale: 0,
-        duration: 0.3,
-        ease: "steps(4)",
-        stagger: { each: 0.03, from: "random" },
-        scrollTrigger: { trigger: ".selecao__grade", start: "top 80%" },
-      });
-    }, raiz);
-    return () => ctx.revert();
-  }, []);
 
   function escolher(i: number, foco = false) {
     if (i === sel) return;
@@ -103,10 +88,10 @@ export function SelecaoJogador() {
   const pronto = prontos.has(sel);
 
   return (
-    <section ref={raiz} id="jogadores" className="secao selecao" aria-labelledby="jogadores-titulo">
+    <section id="jogadores" className="secao selecao" aria-labelledby="jogadores-titulo">
       <div className="selecao__fundo" aria-hidden="true" />
       <div className="container">
-        <Titulo id="jogadores-titulo" icone="jogador" mundo="MUNDO 3 · ALUNOS" titulo="SELECIONE SEU JOGADOR" claro>
+        <Titulo id="jogadores-titulo" icone="jogador" secao="03 JOGADORES" titulo="SELECIONE SEU JOGADOR" claro>
           {alunos.length} jogadores, uma party só. Passe o mouse ou use as setas; Enter escolhe.
         </Titulo>
 
@@ -115,7 +100,7 @@ export function SelecaoJogador() {
             <div className="preview__foto">
               <FotoPreview key={sel} aluno={aluno} />
               <span className="preview__flash" aria-hidden="true" />
-              <span className="preview__p1" aria-hidden="true">
+              <span className="preview__p1 etiqueta" aria-hidden="true">
                 P1
               </span>
               {pronto && (

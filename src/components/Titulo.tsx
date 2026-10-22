@@ -5,33 +5,18 @@ import { PixelIcon, type NomeSprite } from "./PixelIcon";
 type Props = {
   id: string;
   icone: NomeSprite;
-  mundo: string;
+  secao: string;
   titulo: string;
   children?: ReactNode;
   claro?: boolean;
 };
 
-/** Cabeçalho padrão das seções: "MUNDO X", ícone, título e subtítulo, com entrada em degraus. */
-export function Titulo({ id, icone, mundo, titulo, children, claro }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (reduzirMovimento() || !ref.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(ref.current!.children, {
-        x: -40,
-        opacity: 0,
-        duration: 0.45,
-        ease: "steps(5)",
-        stagger: 0.08,
-        scrollTrigger: { trigger: ref.current, start: "top 85%" },
-      });
-    }, ref);
-    return () => ctx.revert();
-  }, []);
+/** Cabeçalho padrão das seções: etiqueta "NN NOME" (igual ao menu), título e subtítulo. */
+export function Titulo({ id, icone, secao, titulo, children, claro }: Props) {
   return (
-    <div ref={ref} className={`titulo ${claro ? "titulo--claro" : ""}`}>
-      <p className="titulo__mundo">
-        <PixelIcon nome={icone} escala={3} /> {mundo}
+    <div className={`titulo ${claro ? "titulo--claro" : ""}`}>
+      <p className="etiqueta">
+        <PixelIcon nome={icone} escala={3} /> {secao}
       </p>
       <h2 id={id} className="titulo__h2">
         {titulo}

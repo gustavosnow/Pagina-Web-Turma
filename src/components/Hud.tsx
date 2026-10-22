@@ -2,34 +2,24 @@ import { useEffect, useState } from "react";
 import { PixelIcon } from "./PixelIcon";
 import { alternarSom, aoMudarSom, somLigado, tocar } from "../lib/som";
 import { irPara, pausarRolagem } from "../lib/rolagem";
+import { TURMA } from "../data/turma";
 
-export const SECOES = [
+const SECOES = [
   { id: "inicio", rotulo: "Início" },
   { id: "jornada", rotulo: "Jornada" },
   { id: "docente", rotulo: "Docente" },
   { id: "jogadores", rotulo: "Jogadores" },
   { id: "mestres", rotulo: "Mestres" },
-  { id: "mundos", rotulo: "Mundos" },
+  { id: "disciplinas", rotulo: "Disciplinas" },
 ];
 
-/** Barra fixa no topo, no formato de HUD de jogo: navegação, placar (progresso da rolagem) e som. */
+/** Barra fixa no topo, no formato de HUD de jogo: navegação, nível da turma e som. */
 export function Hud() {
   const [ativa, setAtiva] = useState("inicio");
-  const [placar, setPlacar] = useState(0);
   const [som, setSom] = useState(somLigado);
   const [menuAberto, setMenuAberto] = useState(false);
 
   useEffect(() => aoMudarSom(setSom), []);
-
-  useEffect(() => {
-    const atualizar = () => {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      setPlacar(max > 0 ? Math.round((scrollY / max) * 999990) : 0);
-    };
-    atualizar();
-    addEventListener("scroll", atualizar, { passive: true });
-    return () => removeEventListener("scroll", atualizar);
-  }, []);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -92,10 +82,7 @@ export function Hud() {
           {links}
         </nav>
         <div className="hud__status">
-          <p className="hud__placar" aria-hidden="true">
-            <span>SCORE</span>
-            {String(placar).padStart(6, "0")}
-          </p>
+          <p className="hud__lv">LV {TURMA.semestre}</p>
           <button
             type="button"
             className="hud__som"

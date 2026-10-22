@@ -3,19 +3,14 @@
    caixas pretas de borda branca, texto com "* ", SOUL como cursor.
    ========================================= */
 :root {
-  --ut-preto: #000;
-  --ut-branco: #fff;
-  --ut-laranja: #ff7f27;
-  --ut-amarelo: #ffff00;
-  --ut-vermelho: #ff0000;
-  --ut-borda: 5px;
-  --alma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff0000' d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E");
+  --alma-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff0000' d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E");
 }
 
 .ut-caixa {
+  padding: var(--e2) var(--e3);
   background: var(--ut-preto);
   color: var(--ut-branco);
-  border: var(--ut-borda) solid var(--ut-branco);
+  border: var(--b) solid var(--ut-branco);
   font-family: var(--f-texto);
   letter-spacing: 0.5px;
 }
@@ -29,7 +24,7 @@
   margin-top: 24px;
   padding: 12px 20px 12px 44px;
   font-family: var(--f-pixel);
-  font-size: 12px;
+  font-size: var(--fs-rotulo);
   line-height: 1;
   color: var(--ut-branco);
   text-decoration: none;
@@ -43,17 +38,23 @@
   left: 14px;
   width: 16px;
   height: 16px;
-  background: var(--alma) center / contain no-repeat;
+  background: var(--alma-svg) center / contain no-repeat;
   opacity: 0;
 }
 .ut-botao:hover,
 .ut-botao:focus-visible {
-  color: var(--ut-amarelo);
-  border-color: var(--ut-amarelo);
+  color: var(--amarelo);
+  border-color: var(--amarelo);
 }
 .ut-botao:hover::before,
-.ut-botao:focus-visible::before {
+.ut-botao:focus-visible::before,
+.ut-botao--primario::before {
   opacity: 1;
+}
+/* CTA principal: a SOUL fica sempre à vista */
+.ut-botao--primario {
+  font-size: var(--fs-rotulo-g);
+  padding-block: var(--e2);
 }
 
 /* Opções de menu (submenus, "É este o nome?") */
@@ -63,7 +64,7 @@
   gap: 12px;
   padding: 4px 6px;
   font-family: var(--f-texto);
-  font-size: 1.9rem;
+  font-size: var(--fs-texto-g);
   line-height: 1.2;
   color: var(--ut-branco);
   text-align: left;
@@ -79,7 +80,7 @@
   outline: none;
 }
 .ut-opcao.is-destaque {
-  color: var(--ut-amarelo);
+  color: var(--amarelo);
 }
 
 /* HUD: o cursor do menu vira a SOUL */
@@ -89,7 +90,7 @@
   width: 12px;
   height: 12px;
   margin-top: -6px;
-  background: var(--alma) center / contain no-repeat;
+  background: var(--alma-svg) center / contain no-repeat;
 }
 
 /* =========================================
@@ -106,7 +107,7 @@
   translate: -50% 0;
   background: var(--ut-preto);
   color: var(--ut-branco);
-  border: var(--ut-borda) solid var(--ut-branco);
+  border: var(--b) solid var(--ut-branco);
   box-shadow: 0 0 0 4px var(--ut-preto);
   cursor: pointer;
   animation: ut-entrar 0.2s steps(3);
@@ -115,7 +116,7 @@
   outline: none;
 }
 .ut-dialogo__texto {
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: var(--fs-texto-g);
   line-height: 1.35;
   white-space: pre-line;
 }
@@ -178,7 +179,7 @@
   padding-bottom: 12%;
 }
 .intro__cena--noite {
-  background: linear-gradient(#1d2b53 0 60%, #2a1d4a 60%);
+  background: linear-gradient(var(--k) 0 60%, var(--roxo-esc) 60%);
 }
 .intro__cena--dia {
   background: linear-gradient(#29adff 0 55%, #5cc8ff 55% 75%, #00e436 75%);
@@ -190,8 +191,8 @@
   right: 18%;
   width: 48px;
   height: 48px;
-  background: #fff1e8;
-  box-shadow: inset -12px -6px 0 #c2c3c7;
+  background: var(--creme);
+  box-shadow: inset -12px -6px 0 var(--cinza);
 }
 .intro__jogador {
   animation: andar 0.5s steps(2) infinite;
@@ -205,7 +206,7 @@
   align-self: start;
   width: 100%;
   min-height: 4.2em;
-  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  font-size: var(--fs-texto-g);
   line-height: 1.4;
   color: var(--ut-branco);
 }
@@ -218,22 +219,22 @@
 }
 .intro__nome {
   font-family: var(--f-pixel);
-  font-size: clamp(26px, 6.5vw, 64px);
+  font-size: var(--fs-display);
   line-height: 1.25;
   letter-spacing: 4px;
   color: var(--ut-branco);
 }
 .intro__periodo {
   font-family: var(--f-pixel);
-  font-size: 12px;
+  font-size: var(--fs-rotulo);
   letter-spacing: 3px;
-  color: #808080;
+  color: var(--ut-cinza);
 }
 .intro__start {
   margin-top: 40px;
   font-family: var(--f-texto);
-  font-size: 1.6rem;
-  color: #808080;
+  font-size: var(--fs-texto-g);
+  color: var(--ut-cinza);
   animation: piscar 1.2s steps(1) infinite;
 }
 .intro__start:focus-visible {
@@ -245,9 +246,9 @@
   right: 16px;
   padding: 8px 12px;
   font-family: var(--f-texto);
-  font-size: 1.3rem;
-  color: #808080;
-  border: 2px solid #404040;
+  font-size: var(--fs-texto-p);
+  color: var(--ut-cinza);
+  border: 2px solid var(--ut-cinza);
 }
 .intro__pular:hover,
 .intro__pular:focus-visible {
@@ -279,7 +280,7 @@
   filter: grayscale(1) contrast(1.6) brightness(1.15);
 }
 .dialogo__texto {
-  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  font-size: var(--fs-texto-g);
   line-height: 1.35;
 }
 .dialogo__cursor {
@@ -295,8 +296,8 @@
   position: absolute;
   right: 16px;
   bottom: 8px;
-  font-size: 1.2rem;
-  color: #808080;
+  font-size: var(--fs-texto-p);
+  color: var(--ut-cinza);
 }
 @media (max-width: 559px) {
   .dialogo {
@@ -319,10 +320,10 @@
 .preview__info .preview__nome {
   color: var(--ut-branco);
   text-shadow: none;
-  font-size: clamp(18px, 2.6vw, 26px);
+  font-size: var(--fs-destaque);
 }
 .preview__info .preview__completo {
-  color: #a0a0a0;
+  color: var(--ut-cinza);
 }
 .preview__info .preview__ficha {
   gap: 4px 20px;
@@ -336,19 +337,19 @@
   min-width: 2.4em;
   margin: 0;
   font-family: var(--f-texto);
-  font-size: 1.5rem;
+  font-size: var(--fs-texto);
   color: var(--ut-branco);
 }
 .preview__info .preview__ficha dd {
-  font-size: 1.5rem;
+  font-size: var(--fs-texto);
 }
 .preview__ficha-larga {
   grid-column: 1 / -1;
 }
 .preview__info .preview__num {
   font-family: var(--f-texto);
-  font-size: 1.3rem;
-  color: #808080;
+  font-size: var(--fs-texto-p);
+  color: var(--ut-cinza);
 }
 
 .nome-confirma {
@@ -366,11 +367,11 @@
   animation: intro-entra 0.4s steps(4);
 }
 .nome-confirma__pergunta {
-  font-size: 1.9rem;
+  font-size: var(--fs-texto-g);
 }
 .nome-confirma__nome {
   font-family: var(--f-pixel);
-  font-size: clamp(28px, 5vw, 48px);
+  font-size: var(--fs-h2);
   line-height: 1.2;
   overflow-wrap: anywhere;
   animation: nome-cresce 1.4s steps(10) both;
@@ -400,7 +401,7 @@
 }
 .batalha .titulo--claro .titulo__h2 {
   text-shadow:
-    4px 4px 0 var(--ut-vermelho),
+    4px 4px 0 var(--alma),
     8px 8px 0 rgba(255, 255, 255, 0.12);
 }
 .batalha__arena {
@@ -431,7 +432,7 @@
 .inimigo__sprite {
   display: grid;
   place-items: center;
-  width: min(100%, 150px);
+  width: min(100%, 112px);
   aspect-ratio: 1;
   animation: flutuar 1.6s steps(2) infinite;
   transition: opacity 0.4s steps(4);
@@ -450,7 +451,7 @@
 }
 .inimigo__iniciais {
   font-family: var(--f-pixel);
-  font-size: clamp(40px, 6vw, 64px);
+  font-size: var(--fs-h2);
   color: var(--ut-branco);
 }
 .inimigo__sprite.is-poupado {
@@ -466,16 +467,16 @@
   align-items: center;
   gap: 8px;
   font-family: var(--f-pixel);
-  font-size: 10px;
+  font-size: var(--fs-rotulo-p);
   line-height: 1.5;
 }
 .inimigo__disc {
-  font-size: 1.15rem;
+  font-size: var(--fs-texto-p);
   line-height: 1.2;
-  color: #a0a0a0;
+  color: var(--ut-cinza);
 }
 .inimigo button[aria-pressed="true"] .inimigo__nome {
-  color: var(--ut-amarelo);
+  color: var(--amarelo);
 }
 .inimigo__miss {
   position: absolute;
@@ -483,8 +484,8 @@
   left: 50%;
   translate: -50% 0;
   font-family: var(--f-pixel);
-  font-size: 18px;
-  color: #c0c0c0;
+  font-size: var(--fs-destaque);
+  color: var(--ut-cinza);
   animation: miss 0.9s steps(6) forwards;
   pointer-events: none;
 }
@@ -508,7 +509,7 @@
   padding: 22px 28px;
 }
 .batalha__texto {
-  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  font-size: var(--fs-texto-g);
   line-height: 1.4;
   white-space: pre-line;
   cursor: pointer;
@@ -524,7 +525,7 @@
   align-items: center;
   gap: 8px 28px;
   font-family: var(--f-pixel);
-  font-size: 12px;
+  font-size: var(--fs-rotulo);
 }
 .batalha__hp {
   display: inline-flex;
@@ -535,11 +536,11 @@
   display: inline-block;
   width: 64px;
   height: 18px;
-  background: var(--ut-amarelo);
+  background: var(--amarelo);
 }
 .batalha__poupados {
   margin-left: auto;
-  color: #a0a0a0;
+  color: var(--ut-cinza);
 }
 .batalha__acoes {
   display: grid;
@@ -560,7 +561,7 @@
   min-height: 56px;
   padding: 10px 12px;
   font-family: var(--f-pixel);
-  font-size: clamp(10px, 1.3vw, 14px);
+  font-size: var(--fs-rotulo);
   color: var(--ut-laranja);
   border: 4px solid var(--ut-laranja);
   background: var(--ut-preto);
@@ -571,8 +572,8 @@
 .ut-acao:hover,
 .ut-acao:focus-visible,
 .ut-acao.is-aberta {
-  color: var(--ut-amarelo);
-  border-color: var(--ut-amarelo);
+  color: var(--amarelo);
+  border-color: var(--amarelo);
   outline: none;
 }
 .ut-acao:hover .ut-acao__icone,
@@ -598,13 +599,13 @@
 }
 @keyframes brilho-save {
   50% {
-    filter: brightness(1.5) drop-shadow(0 0 6px #ffec27);
+    filter: brightness(1.5) drop-shadow(0 0 6px var(--amarelo));
   }
 }
 .ponto-save__dica {
   padding: 4px 6px;
   font-family: var(--f-pixel);
-  font-size: 8px;
+  font-size: var(--fs-rotulo-p);
   color: var(--ut-branco);
   background: var(--ut-preto);
   opacity: 0;
@@ -659,7 +660,7 @@
 .caco {
   width: 8px;
   height: 8px;
-  background: var(--ut-vermelho);
+  background: var(--alma);
   opacity: 0;
 }
 .continue__gameover {
@@ -680,7 +681,7 @@
 }
 .continue__fala {
   min-height: 3em;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: var(--fs-texto-g);
   line-height: 1.4;
   white-space: pre-line;
   text-align: left;
@@ -695,4 +696,19 @@
 .continue .continue__conteudo {
   flex: 1;
   align-content: center;
+}
+
+/* celular: os mestres numa fileira com rolagem lateral, para a batalha caber na tela */
+@media (max-width: 799px) {
+  .batalha__inimigos {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 44%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: var(--e1);
+  }
+  .inimigo {
+    scroll-snap-align: start;
+  }
 }

@@ -66,7 +66,7 @@ A página é um jogo 8 bits que se joga rolando. O mundo é colorido, no estilo 
 - **Docente:** a docente responsável fala numa caixa de diálogo, com retrato.
 - **Jogadores:** seleção de personagem com os 16 alunos e ficha no estilo da tela STAT. As fotos aparecem pixeladas e ficam nítidas ao selecionar. Setas navegam e Enter abre o "É este o nome?".
 - **Mestres:** cada professor é um encontro de batalha com LUTAR, AGIR, ITEM e MISERICÓRDIA. Ninguém sai ferido.
-- **Mundos:** disciplinas como seleção de fases.
+- **Disciplinas:** cada disciplina é um "mundo" (5-1 a 5-5) para selecionar.
 - **Fim:** a SOUL se parte, GAME OVER... e "ainda não".
 
 Efeitos sonoros chiptune são gerados no navegador e começam desligados (botão de som no topo). Com "reduzir movimento" ativado no sistema, a abertura, a rolagem suave e as animações presas à rolagem ficam de fora.

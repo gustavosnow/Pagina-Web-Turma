@@ -65,8 +65,11 @@ export function Hero({ iniciado }: { iniciado: boolean }) {
       </Suspense>
 
       <div className="hero__conteudo container">
-        <p className="hero__tag">
-          {TURMA.instituicao} · {TURMA.periodo} · {TURMA.semestre}º SEMESTRE · TARDE
+        <p className="hero__tag etiqueta">
+          <span>{TURMA.instituicao}</span>
+          <span>{TURMA.periodo}</span>
+          <span>LV {TURMA.semestre}</span>
+          <span>TARDE</span>
         </p>
         <h1 id="hero-titulo" className="hero__titulo">
           <span className="sr-only">Turma de Engenharia de Software {TURMA.periodo}</span>
@@ -80,11 +83,11 @@ export function Hero({ iniciado }: { iniciado: boolean }) {
             <Letras texto="DE SOFTWARE" />
           </span>
         </h1>
-        <p className="hero__lead">Uma jornada em 8 bits. Ingresso em {TURMA.ingresso}, nível 5 em andamento.</p>
+        <p className="hero__lead ut-caixa">Uma jornada em 8 bits. Ingresso em {TURMA.ingresso}, LV {TURMA.semestre} em andamento.</p>
         <div className="hero__acoes">
           <a
             href="#jornada"
-            className="btn btn--start"
+            className="ut-botao ut-botao--primario"
             onClick={(e) => {
               e.preventDefault();
               tocar("start");
@@ -95,7 +98,7 @@ export function Hero({ iniciado }: { iniciado: boolean }) {
           </a>
           <a
             href="#jogadores"
-            className="btn btn--sec"
+            className="ut-botao"
             onClick={(e) => {
               e.preventDefault();
               tocar("select");

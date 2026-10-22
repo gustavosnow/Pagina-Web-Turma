@@ -18,6 +18,7 @@ const NIVEIS = 6; // tons por canal na versão pixelada (posterização, cara de
 export function PixelPhoto({ src, alt, nitida, base = 14, className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const peqRef = useRef<HTMLCanvasElement | null>(null);
   const estado = useRef({ p: nitida ? 1 : 0 });
 
   function desenhar() {
@@ -33,7 +34,7 @@ export function PixelPhoto({ src, alt, nitida, base = 14, className }: Props) {
       return;
     }
     const res = Math.max(4, Math.round(base * Math.pow(LADO / 2 / base, p)));
-    const peq = document.createElement("canvas");
+    const peq = (peqRef.current ??= document.createElement("canvas"));
     peq.width = peq.height = res;
     const pctx = peq.getContext("2d", { willReadFrequently: true });
     if (!pctx) return;

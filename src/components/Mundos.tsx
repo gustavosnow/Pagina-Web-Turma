@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { gsap, reduzirMovimento } from "../lib/movimento";
 import { tocar } from "../lib/som";
 import { DISCIPLINAS, TURMA } from "../data/turma";
@@ -7,22 +6,6 @@ import { Titulo } from "./Titulo";
 
 /** Disciplinas do semestre como seleção de mundos: o bloco "?" pula e solta uma moeda */
 export function Mundos() {
-  const raiz = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (reduzirMovimento() || !raiz.current) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".mundo", {
-        y: 60,
-        opacity: 0,
-        duration: 0.45,
-        ease: "steps(5)",
-        stagger: 0.08,
-        scrollTrigger: { trigger: ".mundos__lista", start: "top 82%" },
-      });
-    }, raiz);
-    return () => ctx.revert();
-  }, []);
 
   function bater(el: HTMLElement) {
     tocar("coin");
@@ -38,9 +21,9 @@ export function Mundos() {
   }
 
   return (
-    <section ref={raiz} id="mundos" className="secao mundos" aria-labelledby="mundos-titulo">
+    <section id="disciplinas" className="secao mundos" aria-labelledby="mundos-titulo">
       <div className="container">
-        <Titulo id="mundos-titulo" icone="moeda" mundo="MUNDO 5 · DISCIPLINAS" titulo="SELECIONE O MUNDO">
+        <Titulo id="mundos-titulo" icone="moeda" secao="05 DISCIPLINAS" titulo="SELECIONE O MUNDO">
           A grade do {TURMA.semestre}º semestre, turno da tarde. Cada disciplina é um mundo para zerar.
         </Titulo>
         <ul className="mundos__lista">

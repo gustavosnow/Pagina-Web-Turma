@@ -22,10 +22,39 @@
   --pergaminho: #f7e3b5;
   --pergaminho-esc: #e2c48a;
 
+  /* interface (Undertale): o que se lê ou se clica */
+  --ut-preto: #000;
+  --ut-branco: #fff;
+  --ut-cinza: #a0a0a0; /* texto secundário: 8:1 sobre preto */
+  --ut-laranja: #ff7f27; /* só nos botões de batalha */
+  --alma: #ff0000; /* a SOUL */
+
   --f-pixel: "Press Start 2P", ui-monospace, monospace;
   --f-texto: "VT323", ui-monospace, monospace;
 
-  --b: 4px; /* espessura padrão do contorno pixel */
+  /* escala tipográfica: 2 títulos, 3 rótulos (pixel, mínimo 10px), 3 textos (VT323, mínimo 20px) */
+  --fs-display: clamp(28px, 5.8vw, 74px);
+  --fs-h2: clamp(22px, 4vw, 40px);
+  --fs-destaque: clamp(18px, 2.8vw, 28px);
+  --fs-rotulo-g: 14px;
+  --fs-rotulo: 12px;
+  --fs-rotulo-p: 10px;
+  --fs-texto-g: clamp(1.6rem, 2.6vw, 2.05rem);
+  --fs-texto: 1.5rem;
+  --fs-texto-p: 1.25rem;
+
+  /* espaçamento em múltiplos de 8 */
+  --e1: 8px;
+  --e2: 16px;
+  --e3: 24px;
+  --e4: 32px;
+  --e6: 48px;
+  --e8: 64px;
+  --e12: 96px;
+  --e16: 128px;
+
+  --b: 4px; /* borda padrão da interface */
+  --dur: 0.4s; /* duração única das transições */
   --hud: 60px;
 }
 
@@ -50,7 +79,7 @@ body {
   background: var(--k2);
   color: var(--k);
   font-family: var(--f-texto);
-  font-size: 1.4rem;
+  font-size: var(--fs-texto);
   line-height: 1.35;
   overflow-x: hidden;
 }
@@ -131,72 +160,11 @@ button {
   background: var(--amarelo);
   color: var(--k);
   font-family: var(--f-pixel);
-  font-size: 12px;
+  font-size: var(--fs-rotulo);
   transform: translateY(-200%);
 }
 .pular:focus {
   transform: none;
-}
-
-/* Contorno pixel com cantos "comidos" */
-.px {
-  box-shadow:
-    0 calc(var(--b) * -1) 0 0 var(--k),
-    0 var(--b) 0 0 var(--k),
-    calc(var(--b) * -1) 0 0 0 var(--k),
-    var(--b) 0 0 0 var(--k);
-}
-
-.placa {
-  background: var(--creme);
-  padding: 20px 24px;
-  box-shadow:
-    0 calc(var(--b) * -1) 0 0 var(--k),
-    0 var(--b) 0 0 var(--k),
-    calc(var(--b) * -1) 0 0 0 var(--k),
-    var(--b) 0 0 0 var(--k),
-    inset 0 -6px 0 0 var(--pergaminho-esc),
-    8px 8px 0 4px rgba(29, 43, 83, 0.35);
-}
-
-/* =========================================
-   BOTÕES
-   ========================================= */
-.btn {
-  --cor: var(--vermelho);
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 22px;
-  font-family: var(--f-pixel);
-  font-size: 13px;
-  line-height: 1;
-  color: var(--creme);
-  text-decoration: none;
-  text-shadow: 2px 2px 0 var(--k);
-  background: var(--cor);
-  box-shadow:
-    0 calc(var(--b) * -1) 0 0 var(--k),
-    0 var(--b) 0 0 var(--k),
-    calc(var(--b) * -1) 0 0 0 var(--k),
-    var(--b) 0 0 0 var(--k),
-    inset -4px -4px 0 0 rgba(0, 0, 0, 0.28),
-    inset 4px 4px 0 0 rgba(255, 255, 255, 0.35),
-    6px 10px 0 0 rgba(15, 21, 48, 0.45);
-  transition: translate 0.12s steps(2);
-  cursor: pointer;
-}
-.btn:hover {
-  translate: 0 -3px;
-}
-.btn:active {
-  translate: 0 4px;
-}
-.btn--sec {
-  --cor: var(--azul);
-}
-.btn--start span {
-  animation: piscar 0.8s steps(1) infinite;
 }
 
 @keyframes piscar {
@@ -205,115 +173,15 @@ button {
   }
 }
 
-/* =========================================
-   CRT — linhas de varredura bem sutis
-   ========================================= */
-.crt {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  pointer-events: none;
-  background: repeating-linear-gradient(to bottom, rgba(15, 21, 48, 0.07) 0 1px, transparent 1px 3px);
-}
-
-/* =========================================
-   BOOT
-   ========================================= */
+/* Overlay da intro (tela cheia por cima de tudo) */
 .boot {
   position: fixed;
   inset: 0;
   z-index: 10000;
   display: grid;
   place-items: center;
-  color: var(--creme);
   cursor: pointer;
   text-align: center;
-}
-.boot__metade {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50.5%;
-  background: var(--k2);
-}
-.boot__metade--cima {
-  top: 0;
-}
-.boot__metade--baixo {
-  bottom: 0;
-}
-.boot__conteudo {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  gap: 18px;
-  padding: 16px;
-}
-.boot__marca {
-  font-family: var(--f-pixel);
-  font-size: clamp(40px, 10vw, 88px);
-  line-height: 1;
-  color: var(--creme);
-  text-shadow:
-    0 6px 0 var(--vermelho),
-    0 12px 0 var(--roxo);
-}
-.boot__marca span {
-  display: block;
-  margin-top: 18px;
-  font-size: 0.42em;
-  color: var(--amarelo);
-  text-shadow: 0 4px 0 var(--laranja);
-}
-.boot__sub {
-  font-family: var(--f-pixel);
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: var(--lavanda);
-  margin-bottom: 18px;
-}
-.boot__barra {
-  width: min(420px, 78vw);
-  height: 28px;
-  padding: 4px;
-  box-shadow:
-    0 -4px 0 0 var(--creme),
-    0 4px 0 0 var(--creme),
-    -4px 0 0 0 var(--creme),
-    4px 0 0 0 var(--creme);
-}
-.boot__barra-fill {
-  height: 100%;
-  background: repeating-linear-gradient(90deg, var(--amarelo) 0 16px, var(--laranja) 16px 20px);
-}
-.boot__msg {
-  font-family: var(--f-pixel);
-  font-size: 10px;
-  min-height: 1em;
-  color: var(--cinza);
-}
-.boot__start {
-  margin-top: 20px;
-  font-family: var(--f-pixel);
-  font-size: clamp(14px, 3vw, 22px);
-  color: var(--amarelo);
-  padding: 12px 16px;
-  opacity: 0.35;
-}
-.boot__start.is-pronto {
-  opacity: 1;
-  animation: piscar 1s steps(1) infinite;
-}
-.boot__dica {
-  font-size: 14px;
-  color: var(--lavanda);
-}
-.boot__copy {
-  margin-top: 28px;
-  font-family: var(--f-pixel);
-  font-size: 8px;
-  line-height: 1.8;
-  color: var(--cinza-esc);
 }
 
 /* =========================================
@@ -343,7 +211,7 @@ button {
   align-items: center;
   gap: 10px;
   font-family: var(--f-pixel);
-  font-size: 12px;
+  font-size: var(--fs-rotulo);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -364,7 +232,7 @@ button {
   display: block;
   padding: 10px 10px 10px 22px;
   font-family: var(--f-pixel);
-  font-size: 10px;
+  font-size: var(--fs-rotulo-p);
   text-transform: uppercase;
   text-decoration: none;
   color: var(--cinza);
@@ -391,16 +259,12 @@ button {
   gap: 12px;
   margin-left: auto;
 }
-.hud__placar {
+.hud__lv {
   display: none;
   font-family: var(--f-pixel);
-  font-size: 11px;
-  color: var(--creme);
+  font-size: var(--fs-rotulo);
+  color: var(--amarelo);
   font-variant-numeric: tabular-nums;
-}
-.hud__placar span {
-  margin-right: 8px;
-  color: var(--vermelho);
 }
 .hud__som {
   display: grid;
@@ -420,13 +284,11 @@ button {
 }
 .hud__menu-btn {
   font-family: var(--f-pixel);
-  font-size: 10px;
-  padding: 12px 12px;
-  background: var(--vermelho);
-  color: var(--creme);
-  box-shadow:
-    inset -3px -3px 0 0 rgba(0, 0, 0, 0.3),
-    0 0 0 3px var(--k2);
+  font-size: var(--fs-rotulo-p);
+  padding: 12px;
+  background: var(--ut-preto);
+  color: var(--ut-branco);
+  border: 2px solid var(--ut-branco);
 }
 
 @media (min-width: 1080px) {
@@ -441,7 +303,7 @@ button {
   }
 }
 @media (min-width: 560px) {
-  .hud__placar {
+  .hud__lv {
     display: block;
   }
 }
@@ -460,7 +322,7 @@ button {
 }
 .pausa__titulo {
   font-family: var(--f-pixel);
-  font-size: 28px;
+  font-size: var(--fs-destaque);
   color: var(--amarelo);
   animation: piscar 1.2s steps(1) infinite;
 }
@@ -469,7 +331,7 @@ button {
   gap: 8px;
 }
 .pausa .hud__links a {
-  font-size: 16px;
+  font-size: var(--fs-rotulo-g);
   padding: 14px 16px 14px 36px;
 }
 .pausa .hud__links a::before {
@@ -481,45 +343,46 @@ button {
    ========================================= */
 .secao {
   position: relative;
-  padding-block: 96px;
+  padding-block: var(--e12);
   overflow: hidden;
 }
 @media (min-width: 900px) {
   .secao {
-    padding-block: 120px;
+    padding-block: var(--e16);
   }
 }
 
 .titulo {
-  margin-bottom: 48px;
+  margin-bottom: var(--e6);
   max-width: 760px;
 }
-.titulo__mundo {
+/* Etiqueta: rótulo curto da interface (seção, disciplina, P1, placas) */
+.etiqueta {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-  padding: 8px 12px;
+  gap: var(--e1);
+  padding: var(--e1) 12px;
   font-family: var(--f-pixel);
-  font-size: 10px;
-  background: var(--k);
-  color: var(--amarelo);
+  font-size: var(--fs-rotulo-p);
+  line-height: 1.4;
+  background: var(--ut-preto);
+  color: var(--ut-branco);
+  border: 2px solid var(--ut-branco);
+}
+.titulo .etiqueta {
+  margin-bottom: var(--e2);
 }
 .titulo__h2 {
   font-family: var(--f-pixel);
   font-weight: 400;
-  font-size: clamp(22px, 4.2vw, 44px);
+  font-size: var(--fs-h2);
   line-height: 1.25;
   color: var(--k);
   text-shadow: 4px 4px 0 rgba(29, 43, 83, 0.18);
 }
 .titulo__sub {
   margin-top: 16px;
-  font-size: clamp(1.43rem, 2vw, 1.76rem);
-  color: var(--k);
-}
-.titulo--claro .titulo__mundo {
-  background: var(--amarelo);
+  font-size: var(--fs-texto-g);
   color: var(--k);
 }
 .titulo--claro .titulo__h2 {

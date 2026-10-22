@@ -96,7 +96,7 @@ function MapaSvg({ alcancada, progressoRef }: { alcancada: number; progressoRef:
         const [x, y] = PONTOS[f.ponto];
         const feita = i <= alcancada;
         const abaixo = y > 250 && !f.placaEmCima;
-        const largura = Math.max(150, Math.max(f.rotulo.length * 11, f.sub.length * 7) + 24);
+        const largura = Math.max(150, Math.max(f.rotulo.length * 12, f.sub.length * 10) + 24);
         return (
           <g key={f.rotulo} transform={`translate(${x} ${y})`} className={`no no--${f.tipo} ${feita ? "is-feito" : ""}`}>
             {f.tipo === "castelo" ? (
@@ -208,34 +208,23 @@ export function Jornada() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [desktop, reduzir]);
 
-  // celular: cada fase aparece ao entrar na tela
-  useLayoutEffect(() => {
-    if (desktop || reduzir || !raiz.current) return;
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>(".fases-lista li").forEach((li) =>
-        gsap.from(li, { x: -30, opacity: 0, duration: 0.4, ease: "steps(4)", scrollTrigger: { trigger: li, start: "top 88%" } }),
-      );
-    }, raiz);
-    return () => ctx.revert();
-  }, [desktop, reduzir]);
-
   const stats = [
     { rotulo: "JOGADORES", valor: ALUNOS.length, icone: "jogador" as const },
     { rotulo: "MESTRES", valor: PROFESSORES.length, icone: "estrela" as const },
     { rotulo: "MUNDOS", valor: DISCIPLINAS.length, icone: "moeda" as const },
-    { rotulo: "NÍVEL", valor: TURMA.semestre, icone: "coracao" as const },
+    { rotulo: "LV", valor: TURMA.semestre, icone: "coracao" as const },
   ];
 
   return (
     <section ref={raiz} id="jornada" className="secao jornada" aria-labelledby="jornada-titulo">
       <div className="jornada__palco">
         <div className="container">
-          <Titulo id="jornada-titulo" icone="bandeira" mundo="MUNDO 1 · SOBRE" titulo="NOSSA JORNADA">
+          <Titulo id="jornada-titulo" icone="bandeira" secao="01 JORNADA" titulo="NOSSA JORNADA">
             Cada semestre, uma fase. A mesma missão: evoluir juntos.
           </Titulo>
 
           <div className="jornada__topo">
-            <p className="placa jornada__sobre">{TURMA.sobre}</p>
+            <p className="ut-caixa jornada__sobre">{TURMA.sobre}</p>
             <ul className="stats" aria-label="Números da turma">
               {stats.map((s) => (
                 <li key={s.rotulo} className="stat">

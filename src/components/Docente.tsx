@@ -30,7 +30,7 @@ export function Docente() {
   return (
     <section ref={raiz} id="docente" className="secao docente" aria-labelledby="docente-titulo">
       <div className="container">
-        <Titulo id="docente-titulo" icone="estrela" mundo="MUNDO 2 · DOCENTE RESPONSÁVEL" titulo="A MESTRA DA GUILDA" claro>
+        <Titulo id="docente-titulo" icone="estrela" secao="02 DOCENTE" titulo="A MESTRA DA GUILDA" claro>
           Toda party precisa de alguém que conheça o mapa.
         </Titulo>
 
@@ -39,7 +39,7 @@ export function Docente() {
             <div className="retrato__moldura">
               <PixelPhoto src={caminhoFoto(D.foto)} alt={`Foto de ${D.nome}`} nitida={visivel} base={10} className="retrato__foto" />
             </div>
-            <figcaption className="retrato__placa">
+            <figcaption className="retrato__placa etiqueta">
               <span>DOCENTE RESPONSÁVEL</span>
             </figcaption>
           </figure>
@@ -47,7 +47,7 @@ export function Docente() {
           <div className="dialogo-wrap">
             <ul className="docente__chips" aria-label="Mundos que conduz">
               {D.disciplinas.map((d) => (
-                <li key={d}>
+                <li key={d} className="etiqueta">
                   <PixelIcon nome="estrela" escala={2} /> {d}
                 </li>
               ))}

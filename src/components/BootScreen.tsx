@@ -87,8 +87,9 @@ export function BootScreen({ aoIniciar }: Props) {
 
   useEffect(() => {
     const tecla = (e: KeyboardEvent) => {
-      if (e.key === "Tab") return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === "Escape") return entrar();
+      if (!["Enter", " ", "z", "Z", "ArrowRight"].includes(e.key)) return;
       e.preventDefault();
       avancar();
     };

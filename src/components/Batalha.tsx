@@ -183,7 +183,7 @@ export function Batalha() {
   return (
     <section ref={raiz} id="mestres" className="secao batalha" aria-labelledby="mestres-titulo">
       <div className="container">
-        <Titulo id="mestres-titulo" icone="alma" mundo="MUNDO 4 · PROFESSORES" titulo="UM MESTRE BLOQUEIA O CAMINHO!" claro>
+        <Titulo id="mestres-titulo" icone="alma" secao="04 MESTRES" titulo="UM MESTRE BLOQUEIA O CAMINHO!" claro>
           Escolha um mestre e uma ação. Ninguém sai ferido.
         </Titulo>
 

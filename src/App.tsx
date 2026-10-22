@@ -41,7 +41,6 @@ export function App() {
         <Mundos />
         <Continue />
       </main>
-      <div className="crt" aria-hidden="true" />
     </DialogoProvider>
   );
 }
