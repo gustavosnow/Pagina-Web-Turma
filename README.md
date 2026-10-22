@@ -58,18 +58,18 @@ Grade do 5º semestre, turno da tarde:
 
 ## O site
 
-A página é um jogo 8 bits que se joga rolando:
+A página é um jogo 8 bits que se joga rolando. O mundo é colorido, no estilo dos jogos de plataforma, e a interface (diálogos, menus e batalhas) segue o estilo do Undertale: caixas pretas de borda branca, falas com "* " e a SOUL vermelha como cursor. A arte, os sons e os textos são próprios; nada do jogo original é usado.
 
-- **Boot:** tela de "liga o console" com barra de carregamento e PRESS START.
+- **Abertura:** intro em quadros, com texto digitado, até a tela de título. Enter passa, Esc pula.
 - **Início:** ilha flutuante em voxels (three.js), renderizada em baixa resolução para o pixel ficar visível.
-- **Jornada:** mapa de mundo do 1º ao 5º semestre; o personagem anda pela trilha conforme a rolagem.
-- **Docente:** a docente responsável numa caixa de diálogo de RPG.
-- **Jogadores:** seleção de personagem com os 16 alunos. As fotos aparecem pixeladas e ficam nítidas ao selecionar. Setas do teclado navegam e Enter confirma.
-- **Mestres:** professores do semestre em cartas.
+- **Jornada:** mapa de mundo do 1º ao 5º semestre; o personagem anda pela trilha conforme a rolagem. A estrela no meio do caminho é um ponto de save.
+- **Docente:** a docente responsável fala numa caixa de diálogo, com retrato.
+- **Jogadores:** seleção de personagem com os 16 alunos e ficha no estilo da tela STAT. As fotos aparecem pixeladas e ficam nítidas ao selecionar. Setas navegam e Enter abre o "É este o nome?".
+- **Mestres:** cada professor é um encontro de batalha com LUTAR, AGIR, ITEM e MISERICÓRDIA. Ninguém sai ferido.
 - **Mundos:** disciplinas como seleção de fases.
-- **Continue?:** contagem regressiva e o fechamento.
+- **Fim:** a SOUL se parte, GAME OVER... e "ainda não".
 
-Efeitos sonoros chiptune são gerados no navegador e começam desligados (botão de som no topo). Com "reduzir movimento" ativado no sistema, a tela de boot, a rolagem suave e as animações presas à rolagem ficam de fora.
+Efeitos sonoros chiptune são gerados no navegador e começam desligados (botão de som no topo). Com "reduzir movimento" ativado no sistema, a abertura, a rolagem suave e as animações presas à rolagem ficam de fora.
 
 ## Estrutura do projeto
 

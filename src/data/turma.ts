@@ -42,9 +42,10 @@ export const DOCENTE_RESPONSAVEL = {
   foto: "jacqueline-rosario",
   disciplinas: ["Arquitetura de Software", "Gerência de Projetos"],
   fala: [
-    "Uma mestra entrou na party!",
-    "Jacqueline Cristina Teixeira do Rosario é a docente responsável pela turma.",
-    "Conduz Arquitetura de Software e Gerência de Projetos: a estrutura dos sistemas e a organização do trabalho, do planejamento à entrega.",
+    "* Uma mestra entrou na party!",
+    "* Jacqueline Cristina Teixeira do Rosario é a docente responsável pela turma.",
+    "* Conduz Arquitetura de Software e Gerência de Projetos: a estrutura dos sistemas e a organização do trabalho, do planejamento à entrega.",
+    "* Saber que ela guia a turma te enche de DETERMINAÇÃO.",
   ],
 };
 

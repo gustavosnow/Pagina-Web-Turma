@@ -5,7 +5,8 @@ import { Hero } from "./components/Hero";
 import { Jornada } from "./components/Jornada";
 import { Docente } from "./components/Docente";
 import { SelecaoJogador } from "./components/SelecaoJogador";
-import { Mestres } from "./components/Mestres";
+import { Batalha } from "./components/Batalha";
+import { DialogoProvider } from "./components/CaixaDialogo";
 import { Mundos } from "./components/Mundos";
 import { Continue } from "./components/Continue";
 import { iniciarRolagem, pausarRolagem } from "./lib/rolagem";
@@ -25,7 +26,7 @@ export function App() {
   }, [iniciado]);
 
   return (
-    <>
+    <DialogoProvider>
       <a className="pular" href="#conteudo">
         Pular para o conteúdo
       </a>
@@ -36,11 +37,11 @@ export function App() {
         <Jornada />
         <Docente />
         <SelecaoJogador />
-        <Mestres />
+        <Batalha />
         <Mundos />
         <Continue />
       </main>
       <div className="crt" aria-hidden="true" />
-    </>
+    </DialogoProvider>
   );
 }

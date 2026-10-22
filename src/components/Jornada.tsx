@@ -5,6 +5,7 @@ import { useMidia } from "../hooks/useMidia";
 import { ALUNOS, DISCIPLINAS, PROFESSORES, TURMA } from "../data/turma";
 import { PixelIcon, type NomeSprite } from "./PixelIcon";
 import { Contador, Titulo } from "./Titulo";
+import { PontoSave } from "./PontoSave";
 
 type Fase = {
   rotulo: string;
@@ -180,10 +181,11 @@ export function Jornada() {
         p: fim,
         ease: "none",
         scrollTrigger: {
+          // só o mapa fica preso, centralizado na área abaixo do HUD
           trigger: ".mapa",
-          start: "center center",
+          start: "center 53%",
           end: "+=1400",
-          pin: ".jornada__palco",
+          pin: true,
           scrub: 0.6,
           anticipatePin: 1,
         },
@@ -250,6 +252,7 @@ export function Jornada() {
           {desktop ? (
             <div className="mapa">
               <MapaSvg alcancada={alcancada} progressoRef={progresso} />
+              <PontoSave className="ponto-save--mapa" />
             </div>
           ) : null}
 
@@ -274,6 +277,7 @@ export function Jornada() {
               </li>
             ))}
           </ol>
+          {!desktop && <PontoSave className="ponto-save--lista" />}
         </div>
       </div>
     </section>

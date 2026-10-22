@@ -4,6 +4,7 @@ import { tocar } from "../lib/som";
 import { ALUNOS, TURMA, caminhoFoto, iniciais, type Aluno } from "../data/turma";
 import { PixelPhoto } from "./PixelPhoto";
 import { Titulo } from "./Titulo";
+import { PixelIcon } from "./PixelIcon";
 
 const COLUNAS = 4;
 const alunos = [...ALUNOS].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
@@ -32,6 +33,8 @@ function FotoPreview({ aluno }: { aluno: Aluno }) {
 export function SelecaoJogador() {
   const [sel, setSel] = useState(0);
   const [prontos, setProntos] = useState<Set<number>>(new Set());
+  // "É este o nome?": aberto ao confirmar um jogador
+  const [confirmando, setConfirmando] = useState<number | null>(null);
   const botoes = useRef<(HTMLButtonElement | null)[]>([]);
   const preview = useRef<HTMLDivElement>(null);
   const raiz = useRef<HTMLElement>(null);
@@ -61,10 +64,20 @@ export function SelecaoJogador() {
   function confirmar(i: number) {
     tocar("select");
     setSel(i);
+    setConfirmando(i);
+  }
+
+  function responder(sim: boolean) {
+    const i = confirmando;
+    setConfirmando(null);
+    if (i === null) return;
+    botoes.current[i]?.focus();
+    if (!sim) return tocar("blip");
+    tocar("start");
     setProntos((p) => new Set(p).add(i));
     if (!reduzirMovimento() && preview.current) {
       gsap.fromTo(preview.current, { x: -6 }, { x: 0, duration: 0.3, ease: "steps(6)" });
-      gsap.fromTo(".preview__flash", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "steps(4)" });
+      gsap.fromTo(".preview__flash", { opacity: 1 }, { opacity: 0, duration: 0.6, ease: "steps(6)" });
     }
   }
 
@@ -94,7 +107,7 @@ export function SelecaoJogador() {
       <div className="selecao__fundo" aria-hidden="true" />
       <div className="container">
         <Titulo id="jogadores-titulo" icone="jogador" mundo="MUNDO 3 · ALUNOS" titulo="SELECIONE SEU JOGADOR" claro>
-          {alunos.length} jogadores, uma party só. Passe o mouse ou use as setas; Enter confirma.
+          {alunos.length} jogadores, uma party só. Passe o mouse ou use as setas; Enter escolhe.
         </Titulo>
 
         <div className="selecao__grid">
@@ -111,33 +124,65 @@ export function SelecaoJogador() {
                 </span>
               )}
             </div>
-            <div className="preview__info">
+            <div className="ut-caixa preview__info">
               <p className="preview__num" aria-hidden="true">
                 {String(sel + 1).padStart(2, "0")} / {alunos.length}
               </p>
-              <h3 className="preview__nome">{aluno.apelido}</h3>
+              <h3 className="preview__nome">"{aluno.apelido}"</h3>
               <p className="preview__completo">{aluno.nome}</p>
               <dl className="preview__ficha">
                 <div>
-                  <dt>CLASSE</dt>
-                  <dd>Eng. de Software</dd>
+                  <dt>LV</dt>
+                  <dd>{TURMA.semestre}</dd>
                 </div>
                 <div>
-                  <dt>NÍVEL</dt>
-                  <dd>{TURMA.semestre}º semestre</dd>
+                  <dt>HP</dt>
+                  <dd>20 / 20</dd>
                 </div>
                 <div>
-                  <dt>TURNO</dt>
-                  <dd>Tarde</dd>
+                  <dt>AT</dt>
+                  <dd>10 (0)</dd>
                 </div>
                 <div>
-                  <dt>GUILDA</dt>
-                  <dd>
-                    {TURMA.instituicao} {TURMA.periodo}
-                  </dd>
+                  <dt>EXP</dt>
+                  <dd>desde {TURMA.ingresso}</dd>
+                </div>
+                <div>
+                  <dt>DF</dt>
+                  <dd>10 (0)</dd>
+                </div>
+                <div>
+                  <dt>NEXT</dt>
+                  <dd>{TURMA.semestre + 1}º semestre</dd>
+                </div>
+                <div className="preview__ficha-larga">
+                  <dt>ARMA</dt>
+                  <dd>Teclado</dd>
+                </div>
+                <div className="preview__ficha-larga">
+                  <dt>ARMADURA</dt>
+                  <dd>Café</dd>
                 </div>
               </dl>
             </div>
+            {confirmando !== null && (
+              <div className="nome-confirma" role="dialog" aria-modal="false" aria-labelledby="nome-confirma-titulo">
+                <p className="nome-confirma__pergunta" id="nome-confirma-titulo">
+                  É este o nome?
+                </p>
+                <p className="nome-confirma__nome">{alunos[confirmando].apelido}</p>
+                <div className="nome-confirma__opcoes" onKeyDown={(e) => e.key === "Escape" && responder(false)}>
+                  <button type="button" className="ut-opcao" onClick={() => responder(false)}>
+                    <PixelIcon nome="alma" escala={3} className="ut-opcao__alma" />
+                    Não
+                  </button>
+                  <button type="button" className="ut-opcao" onClick={() => responder(true)} autoFocus>
+                    <PixelIcon nome="alma" escala={3} className="ut-opcao__alma" />
+                    Sim
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div

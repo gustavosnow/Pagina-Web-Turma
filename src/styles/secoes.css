@@ -490,62 +490,6 @@
   font-size: 1.3rem;
   box-shadow: inset 0 0 0 3px var(--lavanda);
 }
-.dialogo {
-  position: relative;
-  padding: 40px 28px 32px;
-  background: var(--k);
-  box-shadow:
-    inset 0 0 0 4px var(--creme),
-    inset 0 0 0 8px var(--k),
-    inset 0 0 0 10px var(--lavanda),
-    0 0 0 4px var(--k2),
-    12px 12px 0 4px rgba(0, 0, 0, 0.35);
-  min-height: 220px;
-}
-.dialogo__nome {
-  position: absolute;
-  top: -18px;
-  left: 24px;
-  padding: 10px 14px;
-  font-family: var(--f-pixel);
-  font-size: 11px;
-  background: var(--vermelho);
-  box-shadow: 0 0 0 4px var(--creme);
-}
-.dialogo__texto {
-  font-size: clamp(1.56rem, 2.3vw, 2.02rem);
-  line-height: 1.6;
-}
-.dialogo__cursor {
-  display: inline-block;
-  width: 0.55em;
-  height: 1em;
-  margin-left: 4px;
-  vertical-align: -0.1em;
-  background: var(--amarelo);
-  animation: piscar 0.7s steps(1) infinite;
-}
-.dialogo__paginas {
-  position: absolute;
-  right: 20px;
-  bottom: 14px;
-  font-family: var(--f-pixel);
-  font-size: 9px;
-  color: var(--lavanda);
-}
-.btn--dialogo {
-  --cor: var(--verde-esc);
-  margin-top: 28px;
-}
-.btn--dialogo span {
-  animation: quicar 0.6s steps(2) infinite;
-}
-@keyframes quicar {
-  50% {
-    transform: translateY(3px);
-  }
-}
-
 /* =========================================
    SELEÇÃO DE JOGADOR
    ========================================= */
@@ -771,91 +715,6 @@
 }
 
 /* =========================================
-   MESTRES (professores)
-   ========================================= */
-.mestres {
-  background: linear-gradient(to bottom, #bdeeff 0 30%, #8fdcff 30% 60%, var(--azul) 60%);
-}
-.cartas {
-  display: grid;
-  gap: 32px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-}
-.carta {
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  background: var(--creme);
-  box-shadow:
-    inset 0 0 0 4px var(--k),
-    inset 0 0 0 8px var(--cor-npc),
-    10px 10px 0 rgba(29, 43, 83, 0.35);
-  transition:
-    translate 0.15s steps(3),
-    rotate 0.15s steps(3);
-}
-.carta:hover {
-  translate: 0 -10px;
-  rotate: -1deg;
-}
-.carta__topo {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 4px 12px;
-  font-family: var(--f-pixel);
-  font-size: 9px;
-}
-.carta__tipo {
-  color: var(--vermelho);
-}
-.carta__retrato {
-  aspect-ratio: 1;
-  margin-bottom: 16px;
-  background:
-    repeating-linear-gradient(45deg, transparent 0 8px, rgba(255, 255, 255, 0.15) 8px 16px),
-    var(--cor-npc);
-  box-shadow: inset 0 0 0 4px var(--k);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.carta__retrato canvas {
-  width: calc(100% - 8px);
-  height: calc(100% - 8px);
-  image-rendering: pixelated;
-}
-.carta__iniciais {
-  font-family: var(--f-pixel);
-  font-size: 52px;
-  color: var(--creme);
-  text-shadow:
-    4px 4px 0 var(--k),
-    -4px 0 0 var(--k),
-    0 -4px 0 var(--k),
-    4px 0 0 var(--k),
-    0 4px 0 var(--k);
-}
-.carta__nome {
-  font-family: var(--f-pixel);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-.carta__disc {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 4px 8px;
-  margin-bottom: 12px;
-  font-size: 1.23rem;
-  background: var(--k);
-  color: var(--amarelo);
-}
-.carta__resumo {
-  font-size: 1.33rem;
-}
-
-/* =========================================
    MUNDOS (disciplinas)
    ========================================= */
 .mundos {
@@ -1002,26 +861,6 @@
   display: grid;
   justify-items: center;
   gap: 24px;
-}
-.continue__placar {
-  display: grid;
-  gap: 16px;
-  justify-items: center;
-}
-.continue__pergunta {
-  font-family: var(--f-pixel);
-  font-size: clamp(22px, 4vw, 40px);
-  color: var(--creme);
-  text-shadow: 4px 4px 0 var(--vermelho);
-}
-.continue__num {
-  font-family: var(--f-pixel);
-  font-size: clamp(80px, 16vw, 160px);
-  line-height: 1;
-  color: var(--amarelo);
-  text-shadow:
-    8px 8px 0 var(--laranja),
-    16px 16px 0 rgba(0, 0, 0, 0.35);
 }
 .continue__titulo {
   font-family: var(--f-pixel);

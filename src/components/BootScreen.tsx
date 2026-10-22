@@ -1,42 +1,61 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "../lib/movimento";
 import { tocar } from "../lib/som";
-import { ALUNOS } from "../data/turma";
+import { useDigitacao } from "../hooks/useDigitacao";
+import { ALUNOS, TURMA, caminhoFoto } from "../data/turma";
+import { PixelPhoto } from "./PixelPhoto";
+import { PixelIcon } from "./PixelIcon";
 
 type Props = { aoIniciar: () => void };
 
-const MENSAGENS = [
-  "CARREGANDO MAPA...",
-  `CARREGANDO ${ALUNOS.length} JOGADORES...`,
-  "COMPILANDO CAFÉ...",
-  "PRONTO!",
+/* Intro em quadros, como a abertura do Undertale: arte em sépia, texto digitado embaixo
+   e, no fim, a tela de título. Enter/clique completa o texto ou passa o quadro. */
+
+function ArteTurma() {
+  return (
+    <ul className="intro__rostos">
+      {ALUNOS.map((a) => (
+        <li key={a.nome}>
+          <PixelPhoto src={caminhoFoto(a.foto)} alt="" nitida={false} base={8} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ArteCastelo() {
+  return (
+    <div className="intro__cena intro__cena--noite">
+      <span className="intro__lua" />
+      <PixelIcon nome="castelo" escala={9} />
+    </div>
+  );
+}
+
+function ArteCaminho() {
+  return (
+    <div className="intro__cena intro__cena--dia">
+      <PixelIcon nome="jogador" escala={6} className="intro__jogador" />
+      <span className="intro__chao" />
+    </div>
+  );
+}
+
+const QUADROS = [
+  { arte: <ArteTurma />, texto: `Há muito tempo, em ${TURMA.ingresso}, ${ALUNOS.length} estudantes entraram na ${TURMA.instituicao}.` },
+  { arte: <ArteCastelo />, texto: "Eles atravessaram semestres, provas e entregas de madrugada." },
+  { arte: <ArteCaminho />, texto: `Hoje, no ${TURMA.semestre}º semestre, a jornada continua...` },
 ];
 
-/** Tela de "liga o console": barra de carregamento e PRESS START. Qualquer tecla ou clique entra. */
 export function BootScreen({ aoIniciar }: Props) {
   const raiz = useRef<HTMLDivElement>(null);
-  const botao = useRef<HTMLButtonElement>(null);
-  const [progresso, setProgresso] = useState(0);
+  const titulo = useRef<HTMLButtonElement>(null);
+  const [q, setQ] = useState(0);
+  const noTitulo = q >= QUADROS.length;
   const saindo = useRef(false);
+  const { parcial, completo, completar } = useDigitacao(noTitulo ? "" : QUADROS[q].texto, !noTitulo, 45);
 
-  const pronto = progresso >= 100;
-  const mensagem = MENSAGENS[Math.min(MENSAGENS.length - 1, Math.floor((progresso / 100) * (MENSAGENS.length - 1)))];
-
-  useEffect(() => {
-    const estado = { v: 0 };
-    const tween = gsap.to(estado, {
-      v: 100,
-      duration: 1.6,
-      ease: "steps(10)",
-      onUpdate: () => setProgresso(Math.round(estado.v)),
-    });
-    botao.current?.focus();
-    return () => {
-      tween.kill();
-    };
-  }, []);
-
-  function entrar() {
+  const entrar = useCallback(() => {
     if (saindo.current) return;
     saindo.current = true;
     tocar("start");
@@ -44,50 +63,78 @@ export function BootScreen({ aoIniciar }: Props) {
     if (!el) return aoIniciar();
     gsap
       .timeline({ onComplete: aoIniciar })
-      .to(el.querySelector(".boot__conteudo"), { scale: 1.08, opacity: 0, duration: 0.25, ease: "steps(4)" })
-      .to(el.querySelector(".boot__metade--cima"), { yPercent: -100, duration: 0.5, ease: "steps(8)" }, "<0.1")
-      .to(el.querySelector(".boot__metade--baixo"), { yPercent: 100, duration: 0.5, ease: "steps(8)" }, "<");
-  }
+      .to(el, { backgroundColor: "#fff", duration: 0.08, ease: "steps(1)" })
+      .to(el, { backgroundColor: "#000", duration: 0.08, ease: "steps(1)" })
+      .to(el, { opacity: 0, duration: 0.5, ease: "steps(5)" });
+  }, [aoIniciar]);
+
+  const avancar = useCallback(() => {
+    if (noTitulo) return entrar();
+    if (!completo) return completar();
+    setQ((n) => n + 1);
+  }, [noTitulo, completo, completar, entrar]);
+
+  // o quadro passa sozinho um tempo depois do texto terminar
+  useEffect(() => {
+    if (noTitulo || !completo) return;
+    const t = setTimeout(() => setQ((n) => n + 1), 1800);
+    return () => clearTimeout(t);
+  }, [completo, noTitulo]);
+
+  useEffect(() => {
+    if (noTitulo) titulo.current?.focus();
+  }, [noTitulo]);
 
   useEffect(() => {
     const tecla = (e: KeyboardEvent) => {
       if (e.key === "Tab") return;
+      if (e.key === "Escape") return entrar();
       e.preventDefault();
-      entrar();
+      avancar();
     };
-    window.addEventListener("keydown", tecla);
-    return () => window.removeEventListener("keydown", tecla);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    addEventListener("keydown", tecla);
+    return () => removeEventListener("keydown", tecla);
+  }, [avancar, entrar]);
 
   return (
-    <div ref={raiz} className="boot" role="dialog" aria-modal="true" aria-label="Tela inicial" onClick={entrar}>
-      <div className="boot__metade boot__metade--cima" />
-      <div className="boot__metade boot__metade--baixo" />
-      <div className="boot__conteudo">
-        <p className="boot__marca">
-          ES<span>2026.2</span>
-        </p>
-        <p className="boot__sub">ENTERTAINMENT SYSTEM</p>
-        <div
-          className="boot__barra"
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={progresso}
-          aria-label="Carregando"
-        >
-          <div className="boot__barra-fill" style={{ width: `${progresso}%` }} />
+    <div ref={raiz} className="boot intro" role="dialog" aria-modal="true" aria-label="Abertura" onClick={avancar}>
+      {!noTitulo ? (
+        <div className="intro__quadro" key={q}>
+          <div className="intro__arte" aria-hidden="true">
+            {QUADROS[q].arte}
+          </div>
+          <p className="sr-only" aria-live="polite">
+            {QUADROS[q].texto}
+          </p>
+          <p className="intro__texto" aria-hidden="true">
+            {parcial}
+          </p>
         </div>
-        <p className="boot__msg" aria-live="polite">
-          {mensagem}
-        </p>
-        <button ref={botao} type="button" className={`boot__start ${pronto ? "is-pronto" : ""}`} onClick={entrar}>
-          PRESS START
-        </button>
-        <p className="boot__dica">qualquer tecla ou clique para começar</p>
-        <p className="boot__copy">© {new Date().getFullYear()} TURMA DE ENGENHARIA DE SOFTWARE · UEPA</p>
-      </div>
+      ) : (
+        <div className="intro__titulo">
+          <p className="intro__nome">
+            ENGENHARIA
+            <br />
+            DE SOFTWARE
+          </p>
+          <p className="intro__periodo">
+            {TURMA.instituicao} · {TURMA.periodo}
+          </p>
+          <button ref={titulo} type="button" className="intro__start" onClick={entrar}>
+            [PRESS ENTER OU CLIQUE]
+          </button>
+        </div>
+      )}
+      <button
+        type="button"
+        className="intro__pular"
+        onClick={(e) => {
+          e.stopPropagation();
+          entrar();
+        }}
+      >
+        Pular intro
+      </button>
     </div>
   );
 }

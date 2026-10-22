@@ -1,0 +1,698 @@
+/* =========================================
+   CAMADA UNDERTALE — interface por cima do mundo colorido:
+   caixas pretas de borda branca, texto com "* ", SOUL como cursor.
+   ========================================= */
+:root {
+  --ut-preto: #000;
+  --ut-branco: #fff;
+  --ut-laranja: #ff7f27;
+  --ut-amarelo: #ffff00;
+  --ut-vermelho: #ff0000;
+  --ut-borda: 5px;
+  --alma: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 7' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff0000' d='M1 0h2v1H1zM4 0h2v1H4zM0 1h7v3H0zM1 4h5v1H1zM2 5h3v1H2zM3 6h1v1H3z'/%3E%3C/svg%3E");
+}
+
+.ut-caixa {
+  background: var(--ut-preto);
+  color: var(--ut-branco);
+  border: var(--ut-borda) solid var(--ut-branco);
+  font-family: var(--f-texto);
+  letter-spacing: 0.5px;
+}
+
+/* Botão de interface: texto branco, a SOUL aparece no foco/hover */
+.ut-botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 12px 20px 12px 44px;
+  font-family: var(--f-pixel);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--ut-branco);
+  text-decoration: none;
+  background: var(--ut-preto);
+  border: 4px solid var(--ut-branco);
+  cursor: pointer;
+}
+.ut-botao::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  width: 16px;
+  height: 16px;
+  background: var(--alma) center / contain no-repeat;
+  opacity: 0;
+}
+.ut-botao:hover,
+.ut-botao:focus-visible {
+  color: var(--ut-amarelo);
+  border-color: var(--ut-amarelo);
+}
+.ut-botao:hover::before,
+.ut-botao:focus-visible::before {
+  opacity: 1;
+}
+
+/* Opções de menu (submenus, "É este o nome?") */
+.ut-opcao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 6px;
+  font-family: var(--f-texto);
+  font-size: 1.9rem;
+  line-height: 1.2;
+  color: var(--ut-branco);
+  text-align: left;
+}
+.ut-opcao__alma {
+  visibility: hidden;
+}
+.ut-opcao:hover .ut-opcao__alma,
+.ut-opcao:focus .ut-opcao__alma {
+  visibility: visible;
+}
+.ut-opcao:focus {
+  outline: none;
+}
+.ut-opcao.is-destaque {
+  color: var(--ut-amarelo);
+}
+
+/* HUD: o cursor do menu vira a SOUL */
+.hud__links a::before {
+  content: "";
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  background: var(--alma) center / contain no-repeat;
+}
+
+/* =========================================
+   CAIXA DE DIÁLOGO GLOBAL (rodapé da tela)
+   ========================================= */
+.ut-dialogo {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 800;
+  width: min(820px, calc(100vw - 32px));
+  min-height: 150px;
+  padding: 20px 28px 28px;
+  translate: -50% 0;
+  background: var(--ut-preto);
+  color: var(--ut-branco);
+  border: var(--ut-borda) solid var(--ut-branco);
+  box-shadow: 0 0 0 4px var(--ut-preto);
+  cursor: pointer;
+  animation: ut-entrar 0.2s steps(3);
+}
+.ut-dialogo:focus {
+  outline: none;
+}
+.ut-dialogo__texto {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1.35;
+  white-space: pre-line;
+}
+.ut-dialogo__seta {
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  animation: piscar 0.8s steps(1) infinite;
+}
+@keyframes ut-entrar {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* =========================================
+   INTRO
+   ========================================= */
+.intro {
+  background: var(--ut-preto);
+  font-family: var(--f-texto);
+}
+.intro__quadro {
+  display: grid;
+  justify-items: center;
+  gap: 32px;
+  width: min(640px, calc(100vw - 32px));
+  animation: intro-entra 0.6s steps(6);
+}
+@keyframes intro-entra {
+  from {
+    opacity: 0;
+  }
+}
+.intro__arte {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  filter: sepia(0.85) saturate(0.8) contrast(1.05);
+}
+.intro__rostos {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+  width: 92%;
+}
+.intro__rostos canvas {
+  width: 100%;
+  aspect-ratio: 1;
+  image-rendering: pixelated;
+}
+.intro__cena {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: end center;
+  padding-bottom: 12%;
+}
+.intro__cena--noite {
+  background: linear-gradient(#1d2b53 0 60%, #2a1d4a 60%);
+}
+.intro__cena--dia {
+  background: linear-gradient(#29adff 0 55%, #5cc8ff 55% 75%, #00e436 75%);
+  padding-bottom: 25%;
+}
+.intro__lua {
+  position: absolute;
+  top: 14%;
+  right: 18%;
+  width: 48px;
+  height: 48px;
+  background: #fff1e8;
+  box-shadow: inset -12px -6px 0 #c2c3c7;
+}
+.intro__jogador {
+  animation: andar 0.5s steps(2) infinite;
+}
+@keyframes andar {
+  50% {
+    translate: 0 -6px;
+  }
+}
+.intro__texto {
+  align-self: start;
+  width: 100%;
+  min-height: 4.2em;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.4;
+  color: var(--ut-branco);
+}
+.intro__titulo {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  text-align: center;
+  animation: intro-entra 1.2s steps(8);
+}
+.intro__nome {
+  font-family: var(--f-pixel);
+  font-size: clamp(26px, 6.5vw, 64px);
+  line-height: 1.25;
+  letter-spacing: 4px;
+  color: var(--ut-branco);
+}
+.intro__periodo {
+  font-family: var(--f-pixel);
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: #808080;
+}
+.intro__start {
+  margin-top: 40px;
+  font-family: var(--f-texto);
+  font-size: 1.6rem;
+  color: #808080;
+  animation: piscar 1.2s steps(1) infinite;
+}
+.intro__start:focus-visible {
+  color: var(--ut-branco);
+}
+.intro__pular {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 8px 12px;
+  font-family: var(--f-texto);
+  font-size: 1.3rem;
+  color: #808080;
+  border: 2px solid #404040;
+}
+.intro__pular:hover,
+.intro__pular:focus-visible {
+  color: var(--ut-branco);
+  border-color: var(--ut-branco);
+}
+
+/* =========================================
+   DOCENTE — caixa com retrato, como as falas do jogo
+   ========================================= */
+.dialogo {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: start;
+  min-height: 210px;
+  padding: 26px 28px 34px;
+  cursor: pointer;
+  box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.45);
+}
+.dialogo__rosto {
+  width: 112px;
+}
+.dialogo__rosto canvas {
+  width: 100%;
+  aspect-ratio: 1;
+  image-rendering: pixelated;
+  filter: grayscale(1) contrast(1.6) brightness(1.15);
+}
+.dialogo__texto {
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  line-height: 1.35;
+}
+.dialogo__cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.9em;
+  margin-left: 6px;
+  vertical-align: -0.05em;
+  background: var(--ut-branco);
+  animation: piscar 0.7s steps(1) infinite;
+}
+.dialogo__paginas {
+  position: absolute;
+  right: 16px;
+  bottom: 8px;
+  font-size: 1.2rem;
+  color: #808080;
+}
+@media (max-width: 559px) {
+  .dialogo {
+    grid-template-columns: 1fr;
+  }
+  .dialogo__rosto {
+    width: 80px;
+  }
+}
+
+/* =========================================
+   SELEÇÃO — ficha STAT e "É este o nome?"
+   ========================================= */
+.preview {
+  position: relative;
+}
+.preview__info {
+  padding: 20px 22px;
+}
+.preview__info .preview__nome {
+  color: var(--ut-branco);
+  text-shadow: none;
+  font-size: clamp(18px, 2.6vw, 26px);
+}
+.preview__info .preview__completo {
+  color: #a0a0a0;
+}
+.preview__info .preview__ficha {
+  gap: 4px 20px;
+}
+.preview__info .preview__ficha div {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+.preview__info .preview__ficha dt {
+  min-width: 2.4em;
+  margin: 0;
+  font-family: var(--f-texto);
+  font-size: 1.5rem;
+  color: var(--ut-branco);
+}
+.preview__info .preview__ficha dd {
+  font-size: 1.5rem;
+}
+.preview__ficha-larga {
+  grid-column: 1 / -1;
+}
+.preview__info .preview__num {
+  font-family: var(--f-texto);
+  font-size: 1.3rem;
+  color: #808080;
+}
+
+.nome-confirma {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 20px;
+  padding: 24px;
+  background: var(--ut-preto);
+  color: var(--ut-branco);
+  text-align: center;
+  animation: intro-entra 0.4s steps(4);
+}
+.nome-confirma__pergunta {
+  font-size: 1.9rem;
+}
+.nome-confirma__nome {
+  font-family: var(--f-pixel);
+  font-size: clamp(28px, 5vw, 48px);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  animation: nome-cresce 1.4s steps(10) both;
+}
+@keyframes nome-cresce {
+  from {
+    scale: 0.5;
+  }
+}
+.nome-confirma__opcoes {
+  display: flex;
+  gap: 48px;
+  margin-top: 12px;
+}
+
+/* =========================================
+   BATALHA (professores)
+   ========================================= */
+.batalha {
+  background-color: var(--ut-preto);
+  background-image:
+    linear-gradient(rgba(0, 135, 81, 0.35) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(0, 135, 81, 0.35) 2px, transparent 2px);
+  background-size: 64px 64px;
+  background-position: center top;
+  color: var(--ut-branco);
+}
+.batalha .titulo--claro .titulo__h2 {
+  text-shadow:
+    4px 4px 0 var(--ut-vermelho),
+    8px 8px 0 rgba(255, 255, 255, 0.12);
+}
+.batalha__arena {
+  display: grid;
+  gap: 20px;
+}
+.batalha__inimigos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 8px;
+}
+@media (min-width: 800px) {
+  .batalha__inimigos {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.inimigo button {
+  position: relative;
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 12px 8px;
+  color: var(--ut-branco);
+  text-align: center;
+}
+.inimigo__sprite {
+  display: grid;
+  place-items: center;
+  width: min(100%, 150px);
+  aspect-ratio: 1;
+  animation: flutuar 1.6s steps(2) infinite;
+  transition: opacity 0.4s steps(4);
+}
+.inimigo:nth-child(2n) .inimigo__sprite {
+  animation-delay: -0.8s;
+}
+.inimigo__sprite canvas {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  filter: grayscale(1) contrast(1.5) brightness(1.1);
+}
+.inimigo__sprite.is-ativo canvas {
+  filter: none;
+}
+.inimigo__iniciais {
+  font-family: var(--f-pixel);
+  font-size: clamp(40px, 6vw, 64px);
+  color: var(--ut-branco);
+}
+.inimigo__sprite.is-poupado {
+  opacity: 0.35;
+}
+@keyframes flutuar {
+  50% {
+    translate: 0 -6px;
+  }
+}
+.inimigo__nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-pixel);
+  font-size: 10px;
+  line-height: 1.5;
+}
+.inimigo__disc {
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #a0a0a0;
+}
+.inimigo button[aria-pressed="true"] .inimigo__nome {
+  color: var(--ut-amarelo);
+}
+.inimigo__miss {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  translate: -50% 0;
+  font-family: var(--f-pixel);
+  font-size: 18px;
+  color: #c0c0c0;
+  animation: miss 0.9s steps(6) forwards;
+  pointer-events: none;
+}
+@keyframes miss {
+  0% {
+    translate: -50% 10px;
+    opacity: 1;
+  }
+  70% {
+    translate: -50% -14px;
+    opacity: 1;
+  }
+  100% {
+    translate: -50% -14px;
+    opacity: 0;
+  }
+}
+
+.batalha__caixa {
+  min-height: 190px;
+  padding: 22px 28px;
+}
+.batalha__texto {
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  line-height: 1.4;
+  white-space: pre-line;
+  cursor: pointer;
+}
+.batalha__opcoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 6px 24px;
+}
+.batalha__status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 28px;
+  font-family: var(--f-pixel);
+  font-size: 12px;
+}
+.batalha__hp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.hp-barra {
+  display: inline-block;
+  width: 64px;
+  height: 18px;
+  background: var(--ut-amarelo);
+}
+.batalha__poupados {
+  margin-left: auto;
+  color: #a0a0a0;
+}
+.batalha__acoes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 800px) {
+  .batalha__acoes {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+}
+.ut-acao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 12px;
+  font-family: var(--f-pixel);
+  font-size: clamp(10px, 1.3vw, 14px);
+  color: var(--ut-laranja);
+  border: 4px solid var(--ut-laranja);
+  background: var(--ut-preto);
+}
+.ut-acao__alma {
+  display: none;
+}
+.ut-acao:hover,
+.ut-acao:focus-visible,
+.ut-acao.is-aberta {
+  color: var(--ut-amarelo);
+  border-color: var(--ut-amarelo);
+  outline: none;
+}
+.ut-acao:hover .ut-acao__icone,
+.ut-acao:focus-visible .ut-acao__icone,
+.ut-acao.is-aberta .ut-acao__icone {
+  display: none;
+}
+.ut-acao:hover .ut-acao__alma,
+.ut-acao:focus-visible .ut-acao__alma,
+.ut-acao.is-aberta .ut-acao__alma {
+  display: block;
+}
+
+/* =========================================
+   PONTO DE SAVE
+   ========================================= */
+.ponto-save {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 6px;
+  animation: brilho-save 0.9s steps(2) infinite;
+}
+@keyframes brilho-save {
+  50% {
+    filter: brightness(1.5) drop-shadow(0 0 6px #ffec27);
+  }
+}
+.ponto-save__dica {
+  padding: 4px 6px;
+  font-family: var(--f-pixel);
+  font-size: 8px;
+  color: var(--ut-branco);
+  background: var(--ut-preto);
+  opacity: 0;
+  transition: opacity 0.15s steps(2);
+}
+.ponto-save:hover .ponto-save__dica,
+.ponto-save:focus-visible .ponto-save__dica,
+.ponto-save.is-salvo .ponto-save__dica {
+  opacity: 1;
+}
+.ponto-save--mapa {
+  position: absolute;
+  left: 61%;
+  top: 46%;
+}
+.ponto-save--lista {
+  margin: 24px auto 0;
+}
+
+/* =========================================
+   GAME OVER
+   ========================================= */
+.continue {
+  background: linear-gradient(
+    to bottom,
+    var(--ut-preto) 0 34%,
+    var(--k2) 34% 48%,
+    var(--roxo-esc) 48% 62%,
+    var(--roxo) 62% 74%,
+    #c2385a 74%
+  );
+}
+.alma-quebra {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+}
+.alma-quebra > * {
+  grid-area: 1 / 1;
+}
+.alma-quebra__metade {
+  opacity: 0;
+}
+.alma-quebra__metade--e {
+  margin-right: 18px;
+}
+.alma-quebra__metade--d {
+  margin-left: 18px;
+}
+.caco {
+  width: 8px;
+  height: 8px;
+  background: var(--ut-vermelho);
+  opacity: 0;
+}
+.continue__gameover {
+  font-family: var(--f-pixel);
+  font-size: clamp(48px, 11vw, 120px);
+  line-height: 1.05;
+  letter-spacing: 6px;
+  color: var(--ut-branco);
+  opacity: 0;
+  transition: opacity 1.2s steps(8);
+  min-height: 0;
+}
+.continue__gameover.is-visivel {
+  opacity: 1;
+}
+.is-fim .continue__gameover {
+  display: none;
+}
+.continue__fala {
+  min-height: 3em;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  line-height: 1.4;
+  white-space: pre-line;
+  text-align: left;
+}
+.continue .continue__texto {
+  text-align: left;
+}
+.continue__btn {
+  transition-delay: 0.4s;
+}
+/* o conteúdo ocupa o meio da tela e empurra a party e o rodapé para baixo */
+.continue .continue__conteudo {
+  flex: 1;
+  align-content: center;
+}

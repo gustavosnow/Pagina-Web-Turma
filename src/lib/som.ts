@@ -57,6 +57,25 @@ const EFEITOS: Record<string, Nota[]> = {
   ],
   tick: [{ freq: 440, dur: 0.05, tipo: "triangle" }],
   texto: [{ freq: 1200, dur: 0.015 }],
+  // "voz" das caixas de diálogo: um clique grave por letra
+  voz: [{ freq: 196, dur: 0.035 }],
+  salvar: [
+    { freq: 784, dur: 0.06 },
+    { freq: 988, dur: 0.06 },
+    { freq: 1175, dur: 0.06 },
+    { freq: 1568, dur: 0.2, tipo: "triangle" },
+  ],
+  encontro: [
+    { freq: 880, dur: 0.04 },
+    { freq: 0, dur: 0.04 },
+    { freq: 880, dur: 0.04 },
+    { freq: 0, dur: 0.04 },
+    { freq: 880, dur: 0.08 },
+  ],
+  quebra: [
+    { freq: 220, dur: 0.08, tipo: "sawtooth" },
+    { freq: 110, dur: 0.25, tipo: "sawtooth" },
+  ],
 };
 
 export type Efeito = keyof typeof EFEITOS;
@@ -68,6 +87,10 @@ export function tocar(efeito: Efeito) {
     if (ctx.state === "suspended") void ctx.resume();
     let t = ctx.currentTime;
     for (const nota of EFEITOS[efeito]) {
+      if (nota.freq === 0) {
+        t += nota.dur;
+        continue;
+      }
       const osc = ctx.createOscillator();
       const ganho = ctx.createGain();
       osc.type = nota.tipo ?? "square";

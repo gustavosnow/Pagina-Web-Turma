@@ -1,20 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { reduzirMovimento } from "../lib/movimento";
 import { tocar } from "../lib/som";
+import { useDigitacao } from "../hooks/useDigitacao";
 import { DOCENTE_RESPONSAVEL as D, caminhoFoto } from "../data/turma";
 import { PixelPhoto } from "./PixelPhoto";
 import { PixelIcon } from "./PixelIcon";
 import { Titulo } from "./Titulo";
 
-/** A docente responsável como "mestra da guilda", com caixa de diálogo de RPG. */
+/** A docente responsável como "mestra da guilda", falando numa caixa de texto no estilo Undertale. */
 export function Docente() {
   const raiz = useRef<HTMLElement>(null);
   const [visivel, setVisivel] = useState(false);
   const [linha, setLinha] = useState(0);
-  const [letras, setLetras] = useState(0);
-
   const texto = D.fala[linha];
-  const completa = letras >= texto.length;
+  const { parcial, completo, completar } = useDigitacao(texto, visivel);
+  const ultima = linha === D.fala.length - 1;
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => e.isIntersecting && setVisivel(true), { threshold: 0.35 });
@@ -22,32 +21,11 @@ export function Docente() {
     return () => obs.disconnect();
   }, []);
 
-  // máquina de escrever
-  useEffect(() => {
-    if (!visivel) return;
-    if (reduzirMovimento()) {
-      setLetras(texto.length);
-      return;
-    }
-    if (completa) return;
-    const t = setTimeout(() => {
-      setLetras((n) => n + 1);
-      if (letras % 3 === 0) tocar("texto");
-    }, 28);
-    return () => clearTimeout(t);
-  }, [visivel, letras, completa, texto.length]);
-
   function avancar() {
-    if (!completa) {
-      setLetras(texto.length);
-      return;
-    }
+    if (!completo) return completar();
     tocar("select");
     setLinha((l) => (l + 1) % D.fala.length);
-    setLetras(0);
   }
-
-  const ultima = linha === D.fala.length - 1;
 
   return (
     <section ref={raiz} id="docente" className="secao docente" aria-labelledby="docente-titulo">
@@ -74,25 +52,27 @@ export function Docente() {
                 </li>
               ))}
             </ul>
-            {/* texto completo para leitores de tela; a versão animada fica escondida deles */}
+            {/* texto completo para leitores de tela; a versão digitada fica escondida deles */}
             <div className="sr-only">
               <h3>{D.nome}</h3>
               {D.fala.map((f) => (
                 <p key={f}>{f}</p>
               ))}
             </div>
-            <div className="dialogo" aria-hidden="true">
-              <p className="dialogo__nome">JACQUELINE</p>
+            <div className="ut-caixa dialogo" aria-hidden="true" onClick={avancar}>
+              <div className="dialogo__rosto">
+                <PixelPhoto src={caminhoFoto(D.foto)} alt="" nitida={false} base={16} />
+              </div>
               <p className="dialogo__texto">
-                {texto.slice(0, letras)}
-                <span className="dialogo__cursor" />
+                {parcial}
+                {completo && <span className="dialogo__cursor" />}
               </p>
               <p className="dialogo__paginas">
                 {linha + 1}/{D.fala.length}
               </p>
             </div>
-            <button type="button" className="btn btn--dialogo" onClick={avancar} aria-label="Avançar o diálogo">
-              {completa ? (ultima ? "RECOMEÇAR" : "PRÓXIMO") : "PULAR"} <span aria-hidden="true">▼</span>
+            <button type="button" className="ut-botao" onClick={avancar} aria-label="Avançar o diálogo">
+              {completo ? (ultima ? "RECOMEÇAR" : "PRÓXIMO") : "PULAR"}
             </button>
           </div>
         </div>
