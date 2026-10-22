@@ -8,11 +8,11 @@ A página apresenta a sala, os professores, os alunos e as disciplinas deste sem
 
 A turma ingressou em 2024 e hoje cursa o 5º semestre no turno da tarde. Neste período a sala percorre arquitetura de software, gerência de projetos, processos de desenvolvimento, redes de computadores e robótica móvel.
 
-Na página, a seção **Sobre** reúne esse texto e os contadores de alunos, professores e disciplinas.
+Na página, a seção **Jornada** reúne esse texto, os contadores e o mapa dos semestres. A docente responsável pela turma é a professora Jacqueline Cristina Teixeira do Rosario.
 
 ## Alunos
 
-São 16 alunos, exibidos em duas filas e em ordem alfabética. A fila de cima anda para a esquerda e a de baixo para a direita.
+São 16 alunos, em ordem alfabética, na tela de seleção de jogador.
 
 - Cybele Isabela dos Santos Silva
 - Gustavo Neves Coelho
@@ -31,11 +31,11 @@ São 16 alunos, exibidos em duas filas e em ordem alfabética. A fila de cima an
 - Saylon da Rocha Batista
 - Vitoria Mota Ribas
 
-A página mostra apenas o nome. Matrícula, usuário e e-mail pessoal ficam de fora.
+A página mostra apenas o nome e a foto. Matrícula, usuário e e-mail pessoal ficam de fora.
 
 ## Professores
 
-Um card por vez, com foto (ou as iniciais, enquanto não houver imagem) e um resumo. As setas nas laterais trocam o professor.
+Uma carta por professor, com foto (ou as iniciais, enquanto não houver imagem), a disciplina e um resumo.
 
 | Professor | Disciplina |
 | --- | --- |
@@ -44,7 +44,7 @@ Um card por vez, com foto (ou as iniciais, enquanto não houver imagem) e um res
 | Vanessa Castro Rezende | Processos de Desenvolvimento de Software |
 | Keny Lucas da Silva Goes | Robótica Móvel |
 
-Para incluir a foto, preencha o campo `foto` do professor em `js/main.js` com o caminho da imagem.
+Para incluir a foto, gere o arquivo com o script de fotos e preencha o campo `foto` do professor em `src/data/turma.ts`.
 
 ## Disciplinas
 
@@ -56,28 +56,62 @@ Grade do 5º semestre, turno da tarde:
 - Processos de Desenvolvimento de Software
 - Robótica Móvel
 
-## Contato
+## O site
 
-O e-mail que aparece no rodapé ainda é provisório: [contato@exemplo.com](mailto:contato@exemplo.com). Troque pelo endereço real da turma em `index.html`.
+A página é um jogo 8 bits que se joga rolando:
+
+- **Boot:** tela de "liga o console" com barra de carregamento e PRESS START.
+- **Início:** ilha flutuante em voxels (three.js), renderizada em baixa resolução para o pixel ficar visível.
+- **Jornada:** mapa de mundo do 1º ao 5º semestre; o personagem anda pela trilha conforme a rolagem.
+- **Docente:** a docente responsável numa caixa de diálogo de RPG.
+- **Jogadores:** seleção de personagem com os 16 alunos. As fotos aparecem pixeladas e ficam nítidas ao selecionar. Setas do teclado navegam e Enter confirma.
+- **Mestres:** professores do semestre em cartas.
+- **Mundos:** disciplinas como seleção de fases.
+- **Continue?:** contagem regressiva e o fechamento.
+
+Efeitos sonoros chiptune são gerados no navegador e começam desligados (botão de som no topo). Com "reduzir movimento" ativado no sistema, a tela de boot, a rolagem suave e as animações presas à rolagem ficam de fora.
 
 ## Estrutura do projeto
 
 ```
 /
-├── index.html      # Página principal
-├── css/
-│   └── style.css   # Estilos da página
-├── js/
-│   └── main.js     # Dados da turma e scripts
-└── README.md
+├── index.html
+├── public/
+│   └── fotos/              # fotos otimizadas (webp 512px), geradas pelo script
+├── scripts/
+│   └── otimizar-fotos.mjs  # gera public/fotos a partir da pasta original
+├── src/
+│   ├── data/turma.ts       # alunos, professores, disciplinas e textos
+│   ├── components/         # uma seção por arquivo
+│   ├── lib/                # som, rolagem (Lenis) e movimento (GSAP)
+│   └── styles/             # tokens, base e estilos das seções
+└── vite.config.ts
 ```
+
+## Como rodar
+
+Requer Node 18 ou mais novo.
+
+```bash
+npm install
+npm run dev
+```
+
+`npm run build` gera a versão de produção em `dist/`.
 
 ## Como editar
 
-Nomes, resumos e disciplinas ficam no objeto `TURMA`, no início de `js/main.js`. Textos fixos da abertura, do menu e do rodapé ficam em `index.html`.
+- Nomes, textos e disciplinas ficam em `src/data/turma.ts`.
+- Para trocar ou incluir fotos, coloque os arquivos numa pasta e rode `npm run fotos -- "caminho/da/pasta"`. O mapeamento de nome do arquivo para aluno fica no começo de `scripts/otimizar-fotos.mjs`, junto dos recortes manuais das fotos de corpo inteiro. A pasta original não é alterada.
+
+## Publicação (Vercel)
+
+O projeto agora usa Vite. Nas configurações do projeto na Vercel, o preset deve ser **Vite** (comando `npm run build`, saída `dist`).
 
 ## Tecnologias
 
-- HTML5
-- CSS3
-- JavaScript (vanilla)
+- React 18 + TypeScript, com Vite
+- three.js (@react-three/fiber) no cenário 3D
+- GSAP (ScrollTrigger e MotionPath) nas animações
+- Lenis na rolagem suave
+- Fontes Press Start 2P e VT323, servidas pelo próprio site
