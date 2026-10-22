@@ -45,6 +45,13 @@ No início do projeto, as tarefas foram mapeadas e organizadas nas colunas Backl
 
 ![Quadro Kanban na fase inicial](./assets/kanban-fase1.png)
 
+### Quadro de Encerramento
+
+Apresenta-se o resultado do quadro Kanban após o encerramento do projeto, com todos os backlogs finalizados.
+
+![Quadro Kanban na fase final](./assets/Kanban-fase-final.png)
+
+
 ## Alunos
 
 São 16 alunos, em ordem alfabética, na tela de seleção de jogador.
