@@ -10,6 +10,39 @@ A turma ingressou em 2024 e hoje cursa o 5º semestre no turno da tarde. Neste p
 
 Na página, a seção **Jornada** reúne esse texto, os contadores e o mapa dos semestres. A docente responsável pela turma é a professora Jacqueline Cristina Teixeira do Rosario.
 
+## Equipe do projeto
+
+| Integrante | Papel |
+| --- | --- |
+| Gustavo Neves Coelho | Gerente de Projetos |
+| Hanrry Julio Araujo Santos | Testador |
+| Luiz Felipe Meneses Ferreira | Desenvolvedor |
+| Saylon da Rocha Batista | Design |
+
+## Gestão do projeto
+
+O trabalho foi organizado no Trello com a metodologia Kanban. As atividades foram distribuídas entre Backlog, A Fazer, Em Andamento e Concluído.
+
+### Backlog
+
+- **BK-01:** Configuração do repositório e ambiente de desenvolvimento
+- **BK-02:** Prototipagem e desenvolvimento da interface visual
+- **BK-03:** Nome da turma
+- **BK-04:** Apresentação da turma
+- **BK-05:** Lista de alunos
+- **BK-06:** Professores
+- **BK-07:** Disciplinas
+- **BK-08:** Contatos e rodapé
+- **BK-09:** Adaptação e design responsivo
+- **BK-10:** Realização de testes e validação
+- **BK-11:** Publicação e registro da documentação final
+
+### Planejamento inicial
+
+No início do projeto, as tarefas foram mapeadas e organizadas nas colunas Backlog, A Fazer e Em Andamento.
+
+![Quadro Kanban na fase inicial](./assets/kanban-fase1.png)
+
 ## Alunos
 
 São 16 alunos, em ordem alfabética, na tela de seleção de jogador.
