@@ -23,6 +23,8 @@ Na página, a seção **Jornada** reúne esse texto, os contadores e o mapa dos 
 
 O trabalho foi organizado no Trello com a metodologia Kanban. As atividades foram distribuídas entre Backlog, A Fazer, Em Andamento e Concluído.
 
+**Quadro Kanban público:** [Kanban — Página Web Turma](https://trello.com/b/yLjVLrO2/kanban-pagina-web-turma)
+
 ### Backlog
 
 - **BK-01:** Configuração do repositório e ambiente de desenvolvimento
