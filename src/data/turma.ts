@@ -20,11 +20,17 @@ export type Professor = {
 export type Disciplina = {
   codigo: string;
   nome: string;
-  professor: string;
+  professor?: string;
   icone: IconeDisciplina;
 };
 
-export type IconeDisciplina = "arquitetura" | "gerencia" | "redes" | "processos" | "robotica";
+export type IconeDisciplina = "arquitetura" | "gerencia" | "redes" | "processos" | "robotica" | "cultura";
+
+export type Semestre = {
+  numero: number;
+  estado: "concluido" | "atual" | "futuro";
+  disciplinas: string[];
+};
 
 export const TURMA = {
   nome: "Engenharia de Software",
@@ -92,10 +98,10 @@ export const PROFESSORES: Professor[] = [
   },
   {
     nome: "Keny Lucas da Silva Goes",
-    disciplina: "Robótica Móvel",
+    disciplina: "Robótica Móvel e Cultura, Sociedade e Tecnologia",
     foto: "",
     resumo:
-      "Leciona Robótica Móvel. A turma estuda como um robô percebe o ambiente, se desloca e decide o caminho enquanto se move.",
+      "Leciona Robótica Móvel e Cultura, Sociedade e Tecnologia. A turma conecta sistemas autônomos aos impactos sociais e tecnológicos do desenvolvimento.",
   },
 ];
 
@@ -105,7 +111,68 @@ export const DISCIPLINAS: Disciplina[] = [
   { codigo: "5-3", nome: "Fundamentos de Redes de Computadores", professor: "Alan Barreto", icone: "redes" },
   { codigo: "5-4", nome: "Processos de Desenvolvimento de Software", professor: "Vanessa Rezende", icone: "processos" },
   { codigo: "5-5", nome: "Robótica Móvel", professor: "Keny Goes", icone: "robotica" },
+  { codigo: "5-6", nome: "Cultura, Sociedade e Tecnologia", professor: "Keny Goes", icone: "cultura" },
 ];
+
+/** Histórico confirmado pelas pastas compartilhadas da turma no Google Drive. */
+export const SEMESTRES: Semestre[] = [
+  {
+    numero: 1,
+    estado: "concluido",
+    disciplinas: [
+      "Matemática Discreta",
+      "Linguagens Formais",
+      "Inglês Instrumental",
+      "Programação Estruturada",
+      "Sistemas de Informação",
+      "Sistemas Operacionais",
+    ],
+  },
+  {
+    numero: 2,
+    estado: "concluido",
+    disciplinas: [
+      "Estrutura de Dados",
+      "Modelagem de Dados",
+      "Programação Web",
+      "Análise Orientada a Objetos I",
+      "Estatística Aplicada",
+    ],
+  },
+  {
+    numero: 3,
+    estado: "concluido",
+    disciplinas: [
+      "Análise e Projeto de Algoritmos",
+      "Microcontroladores e Microprocessadores",
+      "Inovação Tecnológica e Empreendedorismo",
+      "Banco de Dados I",
+      "Programação Orientada a Objetos I",
+      "Fundamentos de Engenharia de Software",
+    ],
+  },
+  {
+    numero: 4,
+    estado: "concluido",
+    disciplinas: [
+      "Sistemas Multirobóticos",
+      "Projeto Integrado I",
+      "Programação Orientada a Objetos II",
+      "Análise e Projeto de Software",
+      "Banco de Dados II",
+    ],
+  },
+  {
+    numero: 5,
+    estado: "atual",
+    disciplinas: DISCIPLINAS.map((disciplina) => disciplina.nome),
+  },
+  { numero: 6, estado: "futuro", disciplinas: [] },
+  { numero: 7, estado: "futuro", disciplinas: [] },
+  { numero: 8, estado: "futuro", disciplinas: [] },
+];
+
+export const INSTAGRAM_URL = "https://www.instagram.com/eng.software_pbs2024/";
 
 export function iniciais(nome: string) {
   const partes = nome.split(" ").filter((p) => p.length > 2);

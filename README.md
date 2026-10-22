@@ -4,6 +4,8 @@ Landing page da turma de Engenharia de Software, 5º semestre, turno da tarde, i
 
 A página apresenta a sala, os professores, os alunos e as disciplinas deste semestre.
 
+Instagram da turma: [@eng.software_pbs2024](https://www.instagram.com/eng.software_pbs2024/)
+
 ## Sobre
 
 A turma ingressou em 2024 e hoje cursa o 5º semestre no turno da tarde. Neste período a sala percorre arquitetura de software, gerência de projetos, processos de desenvolvimento, redes de computadores e robótica móvel.
@@ -84,7 +86,7 @@ Uma carta por professor, com foto (ou as iniciais, enquanto não houver imagem),
 | Jacqueline Cristina Teixeira do Rosario | Arquitetura de Software e Gerência de Projetos |
 | Alan Cloves Silva Barreto | Fundamentos de Redes de Computadores |
 | Vanessa Castro Rezende | Processos de Desenvolvimento de Software |
-| Keny Lucas da Silva Goes | Robótica Móvel |
+| Keny Lucas da Silva Goes | Robótica Móvel e Cultura, Sociedade e Tecnologia |
 
 Para incluir a foto, gere o arquivo com o script de fotos e preencha o campo `foto` do professor em `src/data/turma.ts`.
 
@@ -97,6 +99,7 @@ Grade do 5º semestre, turno da tarde:
 - Fundamentos de Redes de Computadores
 - Processos de Desenvolvimento de Software
 - Robótica Móvel
+- Cultura, Sociedade e Tecnologia
 
 ## O site
 
@@ -104,7 +107,8 @@ A página é um jogo 8 bits que se joga rolando. O mundo é colorido, no estilo 
 
 - **Abertura:** intro em quadros, com texto digitado, até a tela de título. Enter passa, Esc pula.
 - **Início:** ilha flutuante em voxels (three.js), renderizada em baixa resolução para o pixel ficar visível.
-- **Jornada:** mapa de mundo do 1º ao 5º semestre; o personagem anda pela trilha conforme a rolagem. A estrela no meio do caminho é um ponto de save.
+- **Jornada:** mapa de mundo do 1º ao 8º semestre e a formatura; o personagem anda pela trilha conforme a rolagem. A estrela no meio do caminho é um ponto de save.
+- **Arquivo de fases:** reúne as disciplinas confirmadas do 1º ao 5º semestre.
 - **Docente:** a docente responsável fala numa caixa de diálogo, com retrato.
 - **Jogadores:** seleção de personagem com os 16 alunos e ficha no estilo da tela STAT. As fotos aparecem pixeladas e ficam nítidas ao selecionar. Setas navegam e Enter abre o "É este o nome?".
 - **Mestres:** cada professor é um encontro de batalha com LUTAR, AGIR, ITEM e MISERICÓRDIA. Ninguém sai ferido.

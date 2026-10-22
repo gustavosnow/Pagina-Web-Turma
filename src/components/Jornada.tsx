@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { gsap, useReduzirMovimento } from "../lib/movimento";
 import { tocar } from "../lib/som";
 import { useMidia } from "../hooks/useMidia";
-import { ALUNOS, DISCIPLINAS, PROFESSORES, TURMA } from "../data/turma";
+import { ALUNOS, DISCIPLINAS, PROFESSORES, SEMESTRES, TURMA } from "../data/turma";
 import { PixelIcon, type NomeSprite } from "./PixelIcon";
 import { Contador, Titulo } from "./Titulo";
 import { PontoSave } from "./PontoSave";
@@ -17,28 +17,40 @@ type Fase = {
 
 // Trilha ortogonal, no estilo dos mapas de mundo dos jogos de plataforma (coordenadas do SVG)
 const PONTOS: [number, number][] = [
-  [100, 330],
-  [280, 330],
-  [280, 160],
-  [480, 160],
-  [480, 315],
-  [680, 315],
-  [680, 150],
-  [880, 150],
-  [880, 300],
-  [1015, 300],
-  [1015, 175],
-  [1110, 175],
+  [90, 390],
+  [220, 390],
+  [220, 170],
+  [360, 170],
+  [360, 350],
+  [500, 350],
+  [500, 150],
+  [640, 150],
+  [640, 350],
+  [780, 350],
+  [780, 170],
+  [920, 170],
+  [920, 350],
+  [1060, 350],
+  [1060, 160],
+  [1200, 160],
+  [1200, 300],
 ];
 
 const FASES: Fase[] = [
-  { rotulo: "1º SEMESTRE", sub: `INÍCIO · ${TURMA.ingresso}`, tipo: "fase", ponto: 0 },
-  { rotulo: "2º SEMESTRE", sub: "FASE CONCLUÍDA", tipo: "fase", ponto: 2 },
-  { rotulo: "3º SEMESTRE", sub: "FASE CONCLUÍDA", tipo: "fase", ponto: 4 },
-  { rotulo: "4º SEMESTRE", sub: "FASE CONCLUÍDA", tipo: "fase", ponto: 6 },
-  { rotulo: "5º SEMESTRE", sub: `VOCÊ ESTÁ AQUI · ${TURMA.periodo}`, tipo: "atual", ponto: 8 },
-  { rotulo: "???", sub: "PRÓXIMAS FASES", tipo: "bloqueada", ponto: 9, placaEmCima: true },
-  { rotulo: "FORMATURA", sub: "ZERAR O JOGO", tipo: "castelo", ponto: 11 },
+  ...SEMESTRES.map((semestre, i): Fase => ({
+    rotulo: `${semestre.numero}º SEMESTRE`,
+    sub:
+      semestre.estado === "atual"
+        ? `VOCÊ ESTÁ AQUI · ${TURMA.periodo}`
+        : semestre.estado === "concluido"
+          ? i === 0
+            ? `INÍCIO · ${TURMA.ingresso}`
+            : "FASE CONCLUÍDA"
+          : "FASE BLOQUEADA",
+    tipo: semestre.estado === "atual" ? "atual" : semestre.estado === "futuro" ? "bloqueada" : "fase",
+    ponto: i * 2,
+  })),
+  { rotulo: "FORMATURA", sub: "ZERAR O JOGO", tipo: "castelo", ponto: 16 },
 ];
 const ATUAL = FASES.findIndex((f) => f.tipo === "atual");
 
@@ -55,30 +67,31 @@ function comprimentos() {
 function MapaSvg({ alcancada, progressoRef }: { alcancada: number; progressoRef: React.Ref<SVGPathElement> }) {
   const d = "M" + PONTOS.map((p) => p.join(" ")).join(" L");
   return (
-    <svg className="mapa__svg" viewBox="0 0 1200 460" shapeRendering="crispEdges" aria-hidden="true">
+    <svg className="mapa__svg" viewBox="0 0 1290 520" shapeRendering="crispEdges" aria-hidden="true">
       {/* terreno */}
       <path
-        d="M40 400 V250 H80 V210 H140 V110 H260 V90 H560 V110 H640 V80 H960 V110 H1060 V120 H1170 V260 H1130 V380 H900 V400 H600 V390 H300 V400 Z"
+        d="M30 470 V270 H70 V220 H150 V90 H300 V70 H570 V90 H700 V60 H990 V90 H1120 V100 H1260 V430 H1120 V455 H900 V470 H650 V455 H360 V470 Z"
         className="mapa__terra"
       />
       <path
-        d="M40 392 V250 H80 V210 H140 V110 H260 V90 H560 V110 H640 V80 H960 V110 H1060 V120 H1170 V260 H1130 V372 H900 V392 H600 V382 H300 V392 Z"
+        d="M30 462 V270 H70 V220 H150 V90 H300 V70 H570 V90 H700 V60 H990 V90 H1120 V100 H1260 V422 H1120 V447 H900 V462 H650 V447 H360 V462 Z"
         className="mapa__grama"
       />
       {/* lago e ponte */}
-      <rect x="540" y="200" width="90" height="56" className="mapa__lago" />
-      <rect x="548" y="208" width="18" height="6" className="mapa__brilho" />
+      <rect x="570" y="220" width="90" height="56" className="mapa__lago" />
+      <rect x="578" y="228" width="18" height="6" className="mapa__brilho" />
       {/* árvores */}
       {[
         [170, 240],
         [190, 130],
         [380, 250],
         [400, 120],
-        [590, 340],
+        [590, 400],
         [760, 230],
         [800, 110],
         [960, 230],
-        [1120, 300],
+        [1120, 410],
+        [1210, 110],
         [230, 360],
       ].map(([x, y], i) => (
         <g key={i} transform={`translate(${x} ${y})`}>
@@ -153,9 +166,20 @@ export function Jornada() {
   const desktop = useMidia("(min-width: 900px)");
   const reduzir = useReduzirMovimento();
   const [alcancada, setAlcancada] = useState(reduzir ? ATUAL : 0);
+  const [semestresAbertos, setSemestresAbertos] = useState(() => new Set([TURMA.semestre]));
   const acum = useMemo(comprimentos, []);
   const total = acum[acum.length - 1];
   const fracoes = FASES.map((f) => acum[f.ponto] / total);
+
+  function alternarSemestre(numero: number) {
+    tocar("select");
+    setSemestresAbertos((atuais) => {
+      const proximos = new Set(atuais);
+      if (proximos.has(numero)) proximos.delete(numero);
+      else proximos.add(numero);
+      return proximos;
+    });
+  }
 
   useLayoutEffect(() => {
     const path = progresso.current;
@@ -267,6 +291,53 @@ export function Jornada() {
             ))}
           </ol>
           {!desktop && <PontoSave className="ponto-save--lista" />}
+
+          <section className="arquivo" aria-labelledby="arquivo-titulo">
+            <div className="arquivo__cabecalho">
+              <p className="etiqueta">
+                <PixelIcon nome="save" escala={3} /> ARQUIVO DE FASES
+              </p>
+              <h3 id="arquivo-titulo">DISCIPLINAS DA JORNADA</h3>
+              <p>Abra um semestre para consultar os mundos que a turma já percorreu.</p>
+            </div>
+
+            <ul className="arquivo__grade">
+              {SEMESTRES.filter((semestre) => semestre.disciplinas.length > 0).map((semestre) => {
+                const aberto = semestresAbertos.has(semestre.numero);
+                const painelId = `semestre-${semestre.numero}-disciplinas`;
+                return (
+                  <li
+                    key={semestre.numero}
+                    className={`arquivo__semestre ${semestre.estado === "atual" ? "is-atual" : ""}`}
+                  >
+                    <button
+                      type="button"
+                      className="arquivo__botao"
+                      aria-expanded={aberto}
+                      aria-controls={painelId}
+                      onClick={() => alternarSemestre(semestre.numero)}
+                    >
+                      <span className="arquivo__numero">LV {semestre.numero}</span>
+                      <span>
+                        <strong>{semestre.numero}º SEMESTRE</strong>
+                        <small>{semestre.estado === "atual" ? "EM ANDAMENTO" : "FASE CONCLUÍDA"}</small>
+                      </span>
+                      <span className="arquivo__seta" aria-hidden="true">
+                        {aberto ? "−" : "+"}
+                      </span>
+                    </button>
+                    <div id={painelId} className="arquivo__painel" hidden={!aberto}>
+                      <ul>
+                        {semestre.disciplinas.map((disciplina) => (
+                          <li key={disciplina}>{disciplina}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
         </div>
       </div>
     </section>

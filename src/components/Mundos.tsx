@@ -43,9 +43,11 @@ export function Mundos() {
                 <p className="mundo__codigo">MUNDO {d.codigo}</p>
                 <PixelIcon nome={d.icone} escala={5} className="mundo__icone" />
                 <h3 className="mundo__nome">{d.nome}</h3>
-                <p className="mundo__mestre">
-                  <span>MESTRE</span> {d.professor}
-                </p>
+                {d.professor && (
+                  <p className="mundo__mestre">
+                    <span>MESTRE</span> {d.professor}
+                  </p>
+                )}
               </div>
             </li>
           ))}

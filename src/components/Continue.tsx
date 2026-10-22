@@ -3,7 +3,7 @@ import { gsap, reduzirMovimento } from "../lib/movimento";
 import { tocar } from "../lib/som";
 import { irPara } from "../lib/rolagem";
 import { useDigitacao } from "../hooks/useDigitacao";
-import { ALUNOS, TURMA, caminhoFoto } from "../data/turma";
+import { ALUNOS, INSTAGRAM_URL, TURMA, caminhoFoto } from "../data/turma";
 import { PixelPhoto } from "./PixelPhoto";
 import { PixelIcon } from "./PixelIcon";
 import { Estrelas, Montanhas } from "./Cenario";
@@ -147,6 +147,11 @@ export function Continue() {
         <p>
           {TURMA.semestre}º semestre · turno da tarde · ingresso em {TURMA.ingresso}
         </p>
+        <a className="rodape__instagram" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+          <PixelIcon nome="instagram" escala={2} />
+          <span>@eng.software_pbs2024</span>
+          <span className="sr-only"> (abre em uma nova aba)</span>
+        </a>
         <p className="rodape__copy">© {new Date().getFullYear()} Feito pela turma. Nenhum bug foi ferido nesta produção.</p>
       </footer>
     </section>
