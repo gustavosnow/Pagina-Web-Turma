@@ -14,3 +14,6 @@ desktop.ini
 
 # Dependências (caso venha a usar npm futuramente)
 node_modules/
+
+# Build
+dist/

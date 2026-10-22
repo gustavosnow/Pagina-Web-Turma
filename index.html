@@ -1,148 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Página da turma Engenharia de Software 2026.2 — 5º semestre, turno da tarde." />
-  <title>Engenharia de Software 2026.2</title>
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-
-  <!-- NAVEGAÇÃO -->
-  <header class="navbar">
-    <div class="container navbar__inner">
-      <span class="navbar__brand">ES 2026.2</span>
-      <nav>
-        <ul class="navbar__links">
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#professores">Professores</a></li>
-          <li><a href="#alunos">Alunos</a></li>
-          <li><a href="#disciplinas">Disciplinas</a></li>
-          <li><a href="#contato">Contato</a></li>
-        </ul>
-      </nav>
-      <button class="navbar__toggle" aria-label="Abrir menu">☰</button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero" id="sobre">
-    <div class="hero__bg"></div>
-    <div class="container hero__content">
-      <span class="hero__badge">5º semestre • turno da tarde • 2024</span>
-      <h1 class="hero__title">Engenharia de<br>Software 2026.2</h1>
-      <p class="hero__subtitle">
-        Turma do 5º semestre de Engenharia de Software, no turno da tarde.
-        Conheça quem estuda aqui, os professores e as disciplinas deste período.
-      </p>
-      <div class="hero__actions">
-        <a href="#alunos" class="btn btn--primary">Conhecer a turma</a>
-        <a href="#contato" class="btn btn--outline">Entrar em contato</a>
-      </div>
-    </div>
-    <div class="hero__scroll-hint">↓</div>
-  </section>
-
-  <!-- APRESENTAÇÃO -->
-  <section class="section about" id="apresentacao">
-    <div class="container">
-      <div class="section__header">
-        <h2 class="section__title">Sobre a turma</h2>
-        <p class="section__subtitle">
-          Ingressamos em 2024 e hoje formamos a turma Engenharia de Software 2026.2.
-          No 5º semestre, à tarde, a sala percorre arquitetura, gestão de projetos,
-          processos de desenvolvimento, redes e robótica móvel.
-        </p>
-      </div>
-      <div class="about__cards">
-        <div class="card card--stat">
-          <span class="card__icon">🎓</span>
-          <strong class="card__value" id="count-alunos">0</strong>
-          <span class="card__label">Alunos</span>
-        </div>
-        <div class="card card--stat">
-          <span class="card__icon">👩‍🏫</span>
-          <strong class="card__value" id="count-professores">0</strong>
-          <span class="card__label">Professores</span>
-        </div>
-        <div class="card card--stat">
-          <span class="card__icon">📚</span>
-          <strong class="card__value" id="count-disciplinas">0</strong>
-          <span class="card__label">Disciplinas</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROFESSORES -->
-  <section class="section teachers" id="professores">
-    <div class="container">
-      <div class="section__header">
-        <h2 class="section__title">Professores</h2>
-        <p class="section__subtitle">Os responsáveis por guiar nossa formação.</p>
-      </div>
-      <div class="teacher-slider">
-        <button type="button" class="teacher-slider__arrow teacher-slider__arrow--prev" aria-label="Professor anterior">‹</button>
-        <div class="teacher-slider__viewport" id="teacher-viewport" aria-live="polite"></div>
-        <button type="button" class="teacher-slider__arrow teacher-slider__arrow--next" aria-label="Próximo professor">›</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ALUNOS -->
-  <section class="section students" id="alunos">
-    <div class="container">
-      <div class="section__header">
-        <h2 class="section__title">Nossos Alunos</h2>
-        <p class="section__subtitle">A turma em ordem alfabética.</p>
-      </div>
-    </div>
-    <div class="students-marquee">
-      <div class="students-marquee__row students-marquee__row--left" id="students-row-top"></div>
-      <div class="students-marquee__row students-marquee__row--right" id="students-row-bottom"></div>
-    </div>
-  </section>
-
-  <!-- DISCIPLINAS -->
-  <section class="section disciplines" id="disciplinas">
-    <div class="container">
-      <div class="section__header">
-        <h2 class="section__title">Disciplinas</h2>
-        <p class="section__subtitle">Grade curricular do semestre atual.</p>
-      </div>
-      <div class="grid grid--disciplines" id="disciplines-grid">
-        <!-- Cards gerados via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTATO / RODAPÉ -->
-  <footer class="footer" id="contato">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <span class="navbar__brand">Engenharia de Software 2026.2</span>
-        <p>Página da turma de Engenharia de Software 2026.2, 5º semestre, turno da tarde.</p>
-      </div>
-      <div class="footer__links">
-        <h4>Navegação</h4>
-        <ul>
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#professores">Professores</a></li>
-          <li><a href="#alunos">Alunos</a></li>
-          <li><a href="#disciplinas">Disciplinas</a></li>
-        </ul>
-      </div>
-      <div class="footer__contact">
-        <h4>Contato</h4>
-        <p>📧 <a href="mailto:contato@exemplo.com">contato@exemplo.com</a></p>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p>© <span id="year"></span> Engenharia de Software 2026.2. Todos os direitos reservados.</p>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Turma de Engenharia de Software 2026.2 da UEPA: 5º semestre, turno da tarde. Uma jornada em 8 bits." />
+    <meta name="theme-color" content="#1d2b53" />
+    <meta property="og:title" content="Engenharia de Software 2026.2" />
+    <meta property="og:description" content="Turma do 5º semestre, turno da tarde. Uma jornada em 8 bits." />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Engenharia de Software 2026.2</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding:2rem;font-family:sans-serif">Ative o JavaScript para jogar: este site é a página da turma de Engenharia de Software 2026.2 da UEPA.</p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
